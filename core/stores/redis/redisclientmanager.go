@@ -31,6 +31,8 @@ func getClient(r *Redis) (*red.Client, error) {
 			MaxRetries:   maxRetries,
 			MinIdleConns: idleConns,
 			TLSConfig:    tlsConfig,
+			PoolSize:     r.PoolSize,
+			PoolTimeout:  r.PoolTimeout,
 		})
 		store.WrapProcess(checkDuration)
 		return store, nil

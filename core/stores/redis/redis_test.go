@@ -3,8 +3,10 @@ package redis
 import (
 	"crypto/tls"
 	"errors"
+	"fmt"
 	"io"
 	"strconv"
+	"sync"
 	"testing"
 	"time"
 
@@ -1089,6 +1091,36 @@ func TestRedisBlpopEx(t *testing.T) {
 	})
 }
 
+func TestRedisPoolTimeout(t *testing.T) {
+	// go test -timeout 30s -run ^TestRedisPoolTimeout$ github.com/zeromicro/go-zero/core/stores/redis --count=1 -v
+	for i := 0; i < 100; i++ {
+		TestRedisPoolSize(t)
+	}
+}
+
+func TestRedisPoolSize(t *testing.T) {
+	runOnRedisWithPoolSize(t, func(client *Redis) {
+		client.Ping()
+		fmt.Println(client.PoolSize)
+		var wg sync.WaitGroup
+		for i := 0; i < 100000000; i++ {
+			wg.Add(1)
+			go func() {
+				defer wg.Done()
+				err := client.Set("test", "ss")
+				if err != nil {
+					fmt.Println(err)
+				}
+				_, err = client.Eval("return redis.call('GET', ARGV[1])", nil, "test")
+				if err != nil {
+					fmt.Println(err)
+				}
+			}()
+		}
+		wg.Wait()
+	})
+}
+
 func TestRedisGeo(t *testing.T) {
 	runOnRedis(t, func(client *Redis) {
 		client.Ping()
@@ -1150,6 +1182,24 @@ func runOnRedis(t *testing.T, fn func(client *Redis)) {
 		}
 	}()
 	fn(New(s.Addr()))
+}
+
+func runOnRedisWithPoolSize(t *testing.T, fn func(client *Redis)) {
+	s, err := miniredis.Run()
+	assert.Nil(t, err)
+	defer func() {
+		client, err := clientManager.GetResource(s.Addr(), func() (io.Closer, error) {
+			return nil, errors.New("should already exist")
+		})
+		if err != nil {
+			t.Error(err)
+		}
+
+		if client != nil {
+			client.Close()
+		}
+	}()
+	fn(New(s.Addr(), WithPoolSize(400), WithPoolTimeout(15*time.Second)))
 }
 
 func runOnRedisTLS(t *testing.T, fn func(client *Redis)) {

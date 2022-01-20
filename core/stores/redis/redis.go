@@ -43,11 +43,13 @@ type (
 
 	// Redis defines a redis node/cluster. It is thread-safe.
 	Redis struct {
-		Addr string
-		Type string
-		Pass string
-		tls  bool
-		brk  breaker.Breaker
+		Addr        string
+		Type        string
+		Pass        string
+		tls         bool
+		PoolSize    int
+		PoolTimeout time.Duration
+		brk         breaker.Breaker
 	}
 
 	// RedisNode interface represents a redis node.
@@ -1834,6 +1836,18 @@ func WithPass(pass string) Option {
 func WithTLS() Option {
 	return func(r *Redis) {
 		r.tls = true
+	}
+}
+
+func WithPoolSize(poolSize int) Option {
+	return func(r *Redis) {
+		r.PoolSize = poolSize
+	}
+}
+
+func WithPoolTimeout(poolTimeout time.Duration) Option {
+	return func(r *Redis) {
+		r.PoolTimeout = poolTimeout
 	}
 }
 

@@ -24,9 +24,10 @@ func getCluster(r *Redis) (*red.ClusterClient, error) {
 			MaxRetries:   maxRetries,
 			MinIdleConns: idleConns,
 			TLSConfig:    tlsConfig,
+			PoolSize:     r.PoolSize,
+			PoolTimeout:  r.PoolTimeout,
 		})
 		store.WrapProcess(checkDuration)
-
 		return store, nil
 	})
 	if err != nil {
