@@ -6,7 +6,7 @@ import (
 	"io"
 	"time"
 
-	"github.com/zeromicro/go-zero/core/timex"
+	"github.com/MockyBang/go-zero/core/timex"
 	"go.opentelemetry.io/otel/trace"
 )
 

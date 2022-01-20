@@ -7,11 +7,11 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/zeromicro/go-zero/core/collection"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/core/stat"
-	"github.com/zeromicro/go-zero/core/syncx"
-	"github.com/zeromicro/go-zero/core/timex"
+	"github.com/MockyBang/go-zero/core/collection"
+	"github.com/MockyBang/go-zero/core/logx"
+	"github.com/MockyBang/go-zero/core/stat"
+	"github.com/MockyBang/go-zero/core/syncx"
+	"github.com/MockyBang/go-zero/core/timex"
 )
 
 const (

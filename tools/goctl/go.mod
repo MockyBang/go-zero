@@ -12,8 +12,8 @@ require (
 	github.com/stretchr/testify v1.7.0
 	github.com/tal-tech/go-zero v1.2.5
 	github.com/urfave/cli v1.22.5
-	github.com/zeromicro/antlr v0.0.1
-	github.com/zeromicro/ddl-parser v0.0.0-20210712021150-63520aca7348
+	github.com/MockyBang/antlr v0.0.1
+	github.com/MockyBang/ddl-parser v0.0.0-20210712021150-63520aca7348
 )
 
 require (

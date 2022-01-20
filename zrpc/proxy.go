@@ -4,9 +4,9 @@ import (
 	"context"
 	"sync"
 
-	"github.com/zeromicro/go-zero/core/syncx"
-	"github.com/zeromicro/go-zero/zrpc/internal"
-	"github.com/zeromicro/go-zero/zrpc/internal/auth"
+	"github.com/MockyBang/go-zero/core/syncx"
+	"github.com/MockyBang/go-zero/zrpc/internal"
+	"github.com/MockyBang/go-zero/zrpc/internal/auth"
 	"google.golang.org/grpc"
 )
 

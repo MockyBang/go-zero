@@ -1,10 +1,10 @@
 package zrpc
 
 import (
-	"github.com/zeromicro/go-zero/core/discov"
-	"github.com/zeromicro/go-zero/core/service"
-	"github.com/zeromicro/go-zero/core/stores/redis"
-	"github.com/zeromicro/go-zero/zrpc/resolver"
+	"github.com/MockyBang/go-zero/core/discov"
+	"github.com/MockyBang/go-zero/core/service"
+	"github.com/MockyBang/go-zero/core/stores/redis"
+	"github.com/MockyBang/go-zero/zrpc/resolver"
 )
 
 type (

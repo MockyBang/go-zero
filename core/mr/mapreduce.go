@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/zeromicro/go-zero/core/errorx"
-	"github.com/zeromicro/go-zero/core/lang"
-	"github.com/zeromicro/go-zero/core/threading"
+	"github.com/MockyBang/go-zero/core/errorx"
+	"github.com/MockyBang/go-zero/core/lang"
+	"github.com/MockyBang/go-zero/core/threading"
 )
 
 const (

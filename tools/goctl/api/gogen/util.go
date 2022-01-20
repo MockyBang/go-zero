@@ -70,7 +70,7 @@ func getParentPackage(dir string) (string, error) {
 		return "", err
 	}
 
-	// fix https://github.com/zeromicro/go-zero/issues/1058
+	// fix https://github.com/MockyBang/go-zero/issues/1058
 	wd := projectCtx.WorkDir
 	d := projectCtx.Dir
 	same, err := pathx.SameFile(wd, d)

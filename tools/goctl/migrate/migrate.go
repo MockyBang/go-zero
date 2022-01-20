@@ -19,7 +19,7 @@ import (
 	"github.com/urfave/cli"
 )
 
-const zeromicroVersion = "1.3.0"
+const MockyBangVersion = "1.3.0"
 
 var fset = token.NewFileSet()
 
@@ -27,7 +27,7 @@ func Migrate(c *cli.Context) error {
 	verbose := c.Bool("verbose")
 	version := c.String("version")
 	if len(version) == 0 {
-		version = zeromicroVersion
+		version = MockyBangVersion
 	}
 	err := editMod(version, verbose)
 	if err != nil {
@@ -94,7 +94,7 @@ func rewriteFile(pkgs map[string]*ast.Package, verbose bool) error {
 				imp.Path.Value = newPath
 			}
 
-			var w = bytes.NewBuffer(nil)
+			w := bytes.NewBuffer(nil)
 			err := format.Node(w, fset, file)
 			if err != nil {
 				return fmt.Errorf("[rewriteImport] format file %s error: %+v", filename, err)

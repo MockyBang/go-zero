@@ -10,9 +10,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/MockyBang/go-zero/core/stringx"
+	"github.com/MockyBang/go-zero/core/syncx"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/stringx"
-	"github.com/zeromicro/go-zero/core/syncx"
 	"go.uber.org/goleak"
 )
 

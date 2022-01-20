@@ -9,11 +9,11 @@ import (
 	"sync"
 	"time"
 
-	"github.com/zeromicro/go-zero/core/contextx"
-	"github.com/zeromicro/go-zero/core/lang"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/core/syncx"
-	"github.com/zeromicro/go-zero/core/threading"
+	"github.com/MockyBang/go-zero/core/contextx"
+	"github.com/MockyBang/go-zero/core/lang"
+	"github.com/MockyBang/go-zero/core/logx"
+	"github.com/MockyBang/go-zero/core/syncx"
+	"github.com/MockyBang/go-zero/core/threading"
 	clientv3 "go.etcd.io/etcd/client/v3"
 )
 

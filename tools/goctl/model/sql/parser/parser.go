@@ -6,6 +6,7 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/MockyBang/ddl-parser/parser"
 	"github.com/tal-tech/go-zero/core/collection"
 	"github.com/tal-tech/go-zero/tools/goctl/model/sql/converter"
 	"github.com/tal-tech/go-zero/tools/goctl/model/sql/model"
@@ -13,7 +14,6 @@ import (
 	su "github.com/tal-tech/go-zero/tools/goctl/util"
 	"github.com/tal-tech/go-zero/tools/goctl/util/console"
 	"github.com/tal-tech/go-zero/tools/goctl/util/stringx"
-	"github.com/zeromicro/ddl-parser/parser"
 )
 
 const timeImport = "time.Time"

@@ -3,8 +3,8 @@ package sqlx
 import (
 	"database/sql"
 
-	"github.com/zeromicro/go-zero/core/breaker"
-	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/MockyBang/go-zero/core/breaker"
+	"github.com/MockyBang/go-zero/core/logx"
 )
 
 // ErrNotFound is an alias of sql.ErrNoRows

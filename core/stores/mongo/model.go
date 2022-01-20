@@ -4,8 +4,8 @@ import (
 	"log"
 	"time"
 
+	"github.com/MockyBang/go-zero/core/breaker"
 	"github.com/globalsign/mgo"
-	"github.com/zeromicro/go-zero/core/breaker"
 )
 
 // A Model is a mongo model.

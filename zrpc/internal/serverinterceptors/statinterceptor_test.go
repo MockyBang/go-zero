@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/MockyBang/go-zero/core/lang"
+	"github.com/MockyBang/go-zero/core/stat"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/lang"
-	"github.com/zeromicro/go-zero/core/stat"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/peer"
 )

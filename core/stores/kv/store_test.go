@@ -4,12 +4,12 @@ import (
 	"testing"
 	"time"
 
+	"github.com/MockyBang/go-zero/core/hash"
+	"github.com/MockyBang/go-zero/core/stores/cache"
+	"github.com/MockyBang/go-zero/core/stores/redis"
+	"github.com/MockyBang/go-zero/core/stringx"
 	"github.com/alicebob/miniredis/v2"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/hash"
-	"github.com/zeromicro/go-zero/core/stores/cache"
-	"github.com/zeromicro/go-zero/core/stores/redis"
-	"github.com/zeromicro/go-zero/core/stringx"
 )
 
 var (

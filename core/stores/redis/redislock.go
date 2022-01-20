@@ -5,9 +5,9 @@ import (
 	"sync/atomic"
 	"time"
 
+	"github.com/MockyBang/go-zero/core/logx"
+	"github.com/MockyBang/go-zero/core/stringx"
 	red "github.com/go-redis/redis"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/core/stringx"
 )
 
 const (

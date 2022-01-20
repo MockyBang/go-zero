@@ -10,10 +10,10 @@ import (
 	"testing"
 	"time"
 
+	"github.com/MockyBang/go-zero/core/stringx"
 	"github.com/alicebob/miniredis/v2"
 	red "github.com/go-redis/redis"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/stringx"
 )
 
 func TestRedis_Decr(t *testing.T) {
@@ -1092,7 +1092,7 @@ func TestRedisBlpopEx(t *testing.T) {
 }
 
 func TestRedisPoolTimeout(t *testing.T) {
-	// go test -timeout 30s -run ^TestRedisPoolTimeout$ github.com/zeromicro/go-zero/core/stores/redis --count=1 -v
+	// go test -timeout 30s -run ^TestRedisPoolTimeout$ github.com/MockyBang/go-zero/core/stores/redis --count=1 -v
 	for i := 0; i < 100; i++ {
 		TestRedisPoolSize(t)
 	}

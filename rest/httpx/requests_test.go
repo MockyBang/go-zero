@@ -7,8 +7,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/MockyBang/go-zero/rest/pathvar"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/rest/pathvar"
 )
 
 func TestParseForm(t *testing.T) {

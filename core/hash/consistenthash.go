@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"sync"
 
-	"github.com/zeromicro/go-zero/core/lang"
-	"github.com/zeromicro/go-zero/core/mapping"
+	"github.com/MockyBang/go-zero/core/lang"
+	"github.com/MockyBang/go-zero/core/mapping"
 )
 
 const (

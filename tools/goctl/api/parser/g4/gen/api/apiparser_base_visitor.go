@@ -1,5 +1,5 @@
 package api // ApiParser
-import "github.com/zeromicro/antlr"
+import "github.com/MockyBang/antlr"
 
 type BaseApiParserVisitor struct {
 	*antlr.BaseParseTreeVisitor

@@ -9,9 +9,9 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/MockyBang/go-zero/rest/httpx"
+	"github.com/MockyBang/go-zero/rest/pathvar"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/rest/httpx"
-	"github.com/zeromicro/go-zero/rest/pathvar"
 )
 
 const (

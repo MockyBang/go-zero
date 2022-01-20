@@ -7,8 +7,8 @@ import (
     "context"
 
     "github.com/globalsign/mgo/bson"
-     {{if .Cache}}cachec "github.com/zeromicro/go-zero/core/stores/cache"
-	"github.com/zeromicro/go-zero/core/stores/mongoc"{{else}}"github.com/zeromicro/go-zero/core/stores/mongo"{{end}}
+     {{if .Cache}}cachec "github.com/MockyBang/go-zero/core/stores/cache"
+	"github.com/MockyBang/go-zero/core/stores/mongoc"{{else}}"github.com/MockyBang/go-zero/core/stores/mongo"{{end}}
 )
 
 {{if .Cache}}var prefix{{.Type}}CacheKey = "cache:{{.Type}}:"{{end}}

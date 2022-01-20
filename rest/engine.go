@@ -7,13 +7,13 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/MockyBang/go-zero/core/codec"
+	"github.com/MockyBang/go-zero/core/load"
+	"github.com/MockyBang/go-zero/core/stat"
+	"github.com/MockyBang/go-zero/rest/handler"
+	"github.com/MockyBang/go-zero/rest/httpx"
+	"github.com/MockyBang/go-zero/rest/internal"
 	"github.com/justinas/alice"
-	"github.com/zeromicro/go-zero/core/codec"
-	"github.com/zeromicro/go-zero/core/load"
-	"github.com/zeromicro/go-zero/core/stat"
-	"github.com/zeromicro/go-zero/rest/handler"
-	"github.com/zeromicro/go-zero/rest/httpx"
-	"github.com/zeromicro/go-zero/rest/internal"
 )
 
 // use 1000m to represent 100%

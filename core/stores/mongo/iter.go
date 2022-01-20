@@ -3,8 +3,8 @@
 package mongo
 
 import (
+	"github.com/MockyBang/go-zero/core/breaker"
 	"github.com/globalsign/mgo/bson"
-	"github.com/zeromicro/go-zero/core/breaker"
 )
 
 type (

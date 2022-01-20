@@ -1,7 +1,7 @@
 package resolver
 
 import (
-	"github.com/zeromicro/go-zero/zrpc/resolver/internal"
+	"github.com/MockyBang/go-zero/zrpc/resolver/internal"
 )
 
 // Register registers schemes defined zrpc.

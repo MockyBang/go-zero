@@ -3,8 +3,8 @@ package handler
 import (
 	"net/http"
 
-	"github.com/zeromicro/go-zero/core/stat"
-	"github.com/zeromicro/go-zero/core/timex"
+	"github.com/MockyBang/go-zero/core/stat"
+	"github.com/MockyBang/go-zero/core/timex"
 )
 
 // MetricHandler returns a middleware that stat the metrics.

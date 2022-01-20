@@ -1,4 +1,4 @@
-<img align="right" width="150px" src="https://raw.githubusercontent.com/zeromicro/zero-doc/main/doc/images/go-zero.png">
+<img align="right" width="150px" src="https://raw.githubusercontent.com/MockyBang/zero-doc/main/doc/images/go-zero.png">
 
 # mapreduce
 
@@ -28,7 +28,7 @@ Let's try to put ourselves in the author's shoes and sort out the possible busin
 
 The above is actually processing the input data and finally outputting the cleaned data. There is a very classic asynchronous pattern for data processing: the producer-consumer pattern. So we can abstract the life cycle of data batch processing, which can be roughly divided into three phases.
 
-<img src="https://raw.githubusercontent.com/zeromicro/zero-doc/main/doc/images/mapreduce-serial-en.png" width="500">
+<img src="https://raw.githubusercontent.com/MockyBang/zero-doc/main/doc/images/mapreduce-serial-en.png" width="500">
 
 1. data production generate
 2. data processing mapper
@@ -38,7 +38,7 @@ Data producing is an indispensable stage, data processing and data aggregation a
 
 Since different stages of data processing are performed by different goroutines, it is natural to consider the use of channel to achieve communication between goroutines.
 
-<img src="https://raw.githubusercontent.com/zeromicro/zero-doc/main/doc/images/mapreduce-en.png" width="500">
+<img src="https://raw.githubusercontent.com/MockyBang/zero-doc/main/doc/images/mapreduce-en.png" width="500">
 
 How can I terminate the process at any time?
 
@@ -83,7 +83,7 @@ func main() {
 }
 ```
 
-More examples: [https://github.com/zeromicro/zero-examples/tree/main/mapreduce](https://github.com/zeromicro/zero-examples/tree/main/mapreduce)
+More examples: [https://github.com/MockyBang/zero-examples/tree/main/mapreduce](https://github.com/MockyBang/zero-examples/tree/main/mapreduce)
 
 ## Give a Star! ⭐
 

@@ -10,8 +10,8 @@ import (
 	"net"
 	"net/http"
 
-	"github.com/zeromicro/go-zero/core/codec"
-	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/MockyBang/go-zero/core/codec"
+	"github.com/MockyBang/go-zero/core/logx"
 )
 
 const maxBytes = 1 << 20 // 1 MiB

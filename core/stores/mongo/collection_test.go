@@ -4,13 +4,13 @@ import (
 	"errors"
 	"testing"
 
+	"github.com/MockyBang/go-zero/core/breaker"
+	"github.com/MockyBang/go-zero/core/logx"
+	"github.com/MockyBang/go-zero/core/stores/mongo/internal"
+	"github.com/MockyBang/go-zero/core/stringx"
 	"github.com/globalsign/mgo"
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/breaker"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/core/stores/mongo/internal"
-	"github.com/zeromicro/go-zero/core/stringx"
 )
 
 var errDummy = errors.New("dummy")

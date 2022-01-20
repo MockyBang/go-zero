@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"strconv"
 
-	"github.com/zeromicro/antlr"
+	"github.com/MockyBang/antlr"
 )
 
 // Suppress unused import errors
@@ -634,4 +634,3 @@ func NewSyntaxLitContext(parser antlr.Parser, parent antlr.ParserRuleContext, in
 
 	return p
 }
-

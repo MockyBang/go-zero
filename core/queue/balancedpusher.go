@@ -4,7 +4,7 @@ import (
 	"errors"
 	"sync/atomic"
 
-	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/MockyBang/go-zero/core/logx"
 )
 
 // ErrNoAvailablePusher indicates no pusher available.

@@ -1,8 +1,8 @@
 package collection
 
 import (
-	"github.com/zeromicro/go-zero/core/lang"
-	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/MockyBang/go-zero/core/lang"
+	"github.com/MockyBang/go-zero/core/logx"
 )
 
 const (

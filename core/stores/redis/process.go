@@ -3,10 +3,10 @@ package redis
 import (
 	"strings"
 
+	"github.com/MockyBang/go-zero/core/logx"
+	"github.com/MockyBang/go-zero/core/mapping"
+	"github.com/MockyBang/go-zero/core/timex"
 	red "github.com/go-redis/redis"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/core/mapping"
-	"github.com/zeromicro/go-zero/core/timex"
 )
 
 func checkDuration(proc func(red.Cmder) error) func(red.Cmder) error {

@@ -4,9 +4,9 @@ import (
 	"sync/atomic"
 	"testing"
 
+	"github.com/MockyBang/go-zero/core/discov/internal"
+	"github.com/MockyBang/go-zero/core/stringx"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/discov/internal"
-	"github.com/zeromicro/go-zero/core/stringx"
 )
 
 const (

@@ -8,12 +8,12 @@ import (
 	"testing"
 	"time"
 
+	"github.com/MockyBang/go-zero/core/errorx"
+	"github.com/MockyBang/go-zero/core/hash"
+	"github.com/MockyBang/go-zero/core/stores/redis"
+	"github.com/MockyBang/go-zero/core/stores/redis/redistest"
+	"github.com/MockyBang/go-zero/core/syncx"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/errorx"
-	"github.com/zeromicro/go-zero/core/hash"
-	"github.com/zeromicro/go-zero/core/stores/redis"
-	"github.com/zeromicro/go-zero/core/stores/redis/redistest"
-	"github.com/zeromicro/go-zero/core/syncx"
 )
 
 type mockedNode struct {

@@ -6,10 +6,10 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/MockyBang/go-zero/core/breaker"
+	"github.com/MockyBang/go-zero/core/mapping"
+	"github.com/MockyBang/go-zero/core/syncx"
 	red "github.com/go-redis/redis"
-	"github.com/zeromicro/go-zero/core/breaker"
-	"github.com/zeromicro/go-zero/core/mapping"
-	"github.com/zeromicro/go-zero/core/syncx"
 )
 
 const (

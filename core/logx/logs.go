@@ -18,9 +18,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/zeromicro/go-zero/core/iox"
-	"github.com/zeromicro/go-zero/core/sysx"
-	"github.com/zeromicro/go-zero/core/timex"
+	"github.com/MockyBang/go-zero/core/iox"
+	"github.com/MockyBang/go-zero/core/sysx"
+	"github.com/MockyBang/go-zero/core/timex"
 )
 
 const (

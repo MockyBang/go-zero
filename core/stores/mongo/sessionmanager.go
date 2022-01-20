@@ -4,9 +4,9 @@ import (
 	"io"
 	"time"
 
+	"github.com/MockyBang/go-zero/core/logx"
+	"github.com/MockyBang/go-zero/core/syncx"
 	"github.com/globalsign/mgo"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/core/syncx"
 )
 
 const (

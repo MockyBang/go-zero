@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/core/mapping"
+	"github.com/MockyBang/go-zero/core/logx"
+	"github.com/MockyBang/go-zero/core/mapping"
 )
 
 func desensitize(datasource string) string {

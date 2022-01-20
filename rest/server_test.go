@@ -9,10 +9,10 @@ import (
 	"testing"
 	"time"
 
+	"github.com/MockyBang/go-zero/core/conf"
+	"github.com/MockyBang/go-zero/rest/httpx"
+	"github.com/MockyBang/go-zero/rest/router"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/conf"
-	"github.com/zeromicro/go-zero/rest/httpx"
-	"github.com/zeromicro/go-zero/rest/router"
 )
 
 func TestNewServer(t *testing.T) {

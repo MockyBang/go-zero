@@ -4,7 +4,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/zeromicro/go-zero/core/threading"
+	"github.com/MockyBang/go-zero/core/threading"
 )
 
 // A DelayExecutor delays a tasks on given delay interval.

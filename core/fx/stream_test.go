@@ -12,8 +12,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/MockyBang/go-zero/core/stringx"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/stringx"
 	"go.uber.org/goleak"
 )
 

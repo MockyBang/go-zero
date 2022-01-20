@@ -5,9 +5,9 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/core/stat/internal"
-	"github.com/zeromicro/go-zero/core/threading"
+	"github.com/MockyBang/go-zero/core/logx"
+	"github.com/MockyBang/go-zero/core/stat/internal"
+	"github.com/MockyBang/go-zero/core/threading"
 )
 
 const (

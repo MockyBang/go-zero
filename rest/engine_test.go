@@ -6,8 +6,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/MockyBang/go-zero/core/conf"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/conf"
 )
 
 func TestNewEngine(t *testing.T) {

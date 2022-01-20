@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/zeromicro/go-zero/core/collection"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/core/proc"
-	"github.com/zeromicro/go-zero/core/stat"
-	"github.com/zeromicro/go-zero/core/stringx"
-	"github.com/zeromicro/go-zero/core/threading"
+	"github.com/MockyBang/go-zero/core/collection"
+	"github.com/MockyBang/go-zero/core/logx"
+	"github.com/MockyBang/go-zero/core/proc"
+	"github.com/MockyBang/go-zero/core/stat"
+	"github.com/MockyBang/go-zero/core/stringx"
+	"github.com/MockyBang/go-zero/core/threading"
 )
 
 const (
