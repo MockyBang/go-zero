@@ -1,4 +1,4 @@
-module github.com/zeromicro/go-zero
+module github.com/MockyBang/go-zero
 
 go 1.15
 
