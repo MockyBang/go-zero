@@ -1839,12 +1839,14 @@ func WithTLS() Option {
 	}
 }
 
+// WithPoolSize customizes the given Redis with given PoolSize
 func WithPoolSize(poolSize int) Option {
 	return func(r *Redis) {
 		r.PoolSize = poolSize
 	}
 }
 
+// WithPoolTimeout customizes the given Redis with given PoolTimeout
 func WithPoolTimeout(poolTimeout time.Duration) Option {
 	return func(r *Redis) {
 		r.PoolTimeout = poolTimeout
