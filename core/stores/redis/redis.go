@@ -47,6 +47,7 @@ type (
 		Type        string
 		Pass        string
 		tls         bool
+		DB          int
 		PoolSize    int
 		PoolTimeout time.Duration
 		brk         breaker.Breaker
