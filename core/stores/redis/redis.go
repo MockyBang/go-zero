@@ -1840,6 +1840,12 @@ func WithTLS() Option {
 	}
 }
 
+func WithDB(db int) Option {
+	return func(r *Redis) {
+		r.DB = db
+	}
+}
+
 // WithPoolSize customizes the given Redis with given PoolSize
 func WithPoolSize(poolSize int) Option {
 	return func(r *Redis) {
