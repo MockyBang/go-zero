@@ -8,8 +8,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/MockyBang/go-zero/tools/goctl/api/parser"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/tools/goctl/api/parser"
 )
 
 const testApiTemplate = `

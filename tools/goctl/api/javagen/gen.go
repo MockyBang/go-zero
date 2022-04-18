@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/MockyBang/go-zero/core/logx"
+	"github.com/MockyBang/go-zero/tools/goctl/api/parser"
+	"github.com/MockyBang/go-zero/tools/goctl/util/pathx"
 	"github.com/logrusorgru/aurora"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/tools/goctl/api/parser"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
 	"github.com/urfave/cli"
 )
 

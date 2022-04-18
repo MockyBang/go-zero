@@ -17,12 +17,12 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/MockyBang/go-zero/core/syncx"
+	"github.com/MockyBang/go-zero/tools/goctl/util/console"
+	"github.com/MockyBang/go-zero/tools/goctl/util/ctx"
+	"github.com/MockyBang/go-zero/tools/goctl/vars"
 	"github.com/logrusorgru/aurora"
 	"github.com/urfave/cli"
-	"github.com/zeromicro/go-zero/core/syncx"
-	"github.com/zeromicro/go-zero/tools/goctl/util/console"
-	"github.com/zeromicro/go-zero/tools/goctl/util/ctx"
-	"github.com/zeromicro/go-zero/tools/goctl/vars"
 )
 
 const MockyBangVersion = "1.3.0"

@@ -5,9 +5,9 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/zeromicro/go-zero/tools/goctl/api/spec"
-	apiutil "github.com/zeromicro/go-zero/tools/goctl/api/util"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
+	"github.com/MockyBang/go-zero/tools/goctl/api/spec"
+	apiutil "github.com/MockyBang/go-zero/tools/goctl/api/util"
+	"github.com/MockyBang/go-zero/tools/goctl/util/pathx"
 )
 
 const (

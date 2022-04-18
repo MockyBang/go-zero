@@ -4,8 +4,8 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/tools/goctl/api/parser"
+	"github.com/MockyBang/go-zero/core/logx"
+	"github.com/MockyBang/go-zero/tools/goctl/api/parser"
 	"github.com/urfave/cli"
 )
 

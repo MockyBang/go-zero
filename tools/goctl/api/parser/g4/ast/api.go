@@ -5,11 +5,13 @@ import (
 	"path"
 	"sort"
 
-	"github.com/zeromicro/go-zero/tools/goctl/api/parser/g4/gen/api"
+	"github.com/MockyBang/go-zero/tools/goctl/api/parser/g4/gen/api"
 )
 
-const prefixKey = "prefix"
-const groupKey = "group"
+const (
+	prefixKey = "prefix"
+	groupKey  = "group"
+)
 
 // Api describes syntax for api
 type Api struct {

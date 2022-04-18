@@ -7,7 +7,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/zeromicro/go-zero/tools/goctl/vars"
+	"github.com/MockyBang/go-zero/tools/goctl/vars"
 )
 
 const (

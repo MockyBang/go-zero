@@ -6,12 +6,12 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/zeromicro/go-zero/tools/goctl/api/parser/g4/gen/api"
-	"github.com/zeromicro/go-zero/tools/goctl/api/spec"
-	"github.com/zeromicro/go-zero/tools/goctl/config"
-	"github.com/zeromicro/go-zero/tools/goctl/util/format"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
-	"github.com/zeromicro/go-zero/tools/goctl/vars"
+	"github.com/MockyBang/go-zero/tools/goctl/api/parser/g4/gen/api"
+	"github.com/MockyBang/go-zero/tools/goctl/api/spec"
+	"github.com/MockyBang/go-zero/tools/goctl/config"
+	"github.com/MockyBang/go-zero/tools/goctl/util/format"
+	"github.com/MockyBang/go-zero/tools/goctl/util/pathx"
+	"github.com/MockyBang/go-zero/tools/goctl/vars"
 )
 
 const logicTemplate = `package {{.pkgName}}

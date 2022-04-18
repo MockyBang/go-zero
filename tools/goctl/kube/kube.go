@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"text/template"
 
+	"github.com/MockyBang/go-zero/tools/goctl/util"
+	"github.com/MockyBang/go-zero/tools/goctl/util/pathx"
 	"github.com/logrusorgru/aurora"
-	"github.com/zeromicro/go-zero/tools/goctl/util"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
 	"github.com/urfave/cli"
 )
 

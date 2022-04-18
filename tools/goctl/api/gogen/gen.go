@@ -11,14 +11,14 @@ import (
 	"sync"
 	"time"
 
+	"github.com/MockyBang/go-zero/core/logx"
+	apiformat "github.com/MockyBang/go-zero/tools/goctl/api/format"
+	"github.com/MockyBang/go-zero/tools/goctl/api/parser"
+	apiutil "github.com/MockyBang/go-zero/tools/goctl/api/util"
+	"github.com/MockyBang/go-zero/tools/goctl/config"
+	"github.com/MockyBang/go-zero/tools/goctl/util"
+	"github.com/MockyBang/go-zero/tools/goctl/util/pathx"
 	"github.com/logrusorgru/aurora"
-	"github.com/zeromicro/go-zero/core/logx"
-	apiformat "github.com/zeromicro/go-zero/tools/goctl/api/format"
-	"github.com/zeromicro/go-zero/tools/goctl/api/parser"
-	apiutil "github.com/zeromicro/go-zero/tools/goctl/api/util"
-	"github.com/zeromicro/go-zero/tools/goctl/config"
-	"github.com/zeromicro/go-zero/tools/goctl/util"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
 	"github.com/urfave/cli"
 )
 

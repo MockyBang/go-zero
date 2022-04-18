@@ -8,11 +8,11 @@ import (
 	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/MockyBang/go-zero/core/stores/cache"
+	"github.com/MockyBang/go-zero/core/stores/redis"
+	"github.com/MockyBang/go-zero/core/stores/redis/redistest"
+	mocksql "github.com/MockyBang/go-zero/tools/goctl/model/sql/test"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/stores/cache"
-	"github.com/zeromicro/go-zero/core/stores/redis"
-	"github.com/zeromicro/go-zero/core/stores/redis/redistest"
-	mocksql "github.com/zeromicro/go-zero/tools/goctl/model/sql/test"
 )
 
 func TestStudentModel(t *testing.T) {

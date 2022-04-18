@@ -5,32 +5,32 @@ import (
 	"os"
 	"runtime"
 
+	"github.com/MockyBang/go-zero/core/load"
+	"github.com/MockyBang/go-zero/core/logx"
+	"github.com/MockyBang/go-zero/tools/goctl/api/apigen"
+	"github.com/MockyBang/go-zero/tools/goctl/api/dartgen"
+	"github.com/MockyBang/go-zero/tools/goctl/api/docgen"
+	"github.com/MockyBang/go-zero/tools/goctl/api/format"
+	"github.com/MockyBang/go-zero/tools/goctl/api/gogen"
+	"github.com/MockyBang/go-zero/tools/goctl/api/javagen"
+	"github.com/MockyBang/go-zero/tools/goctl/api/ktgen"
+	"github.com/MockyBang/go-zero/tools/goctl/api/new"
+	"github.com/MockyBang/go-zero/tools/goctl/api/tsgen"
+	"github.com/MockyBang/go-zero/tools/goctl/api/validate"
+	"github.com/MockyBang/go-zero/tools/goctl/bug"
+	"github.com/MockyBang/go-zero/tools/goctl/docker"
+	"github.com/MockyBang/go-zero/tools/goctl/internal/errorx"
+	"github.com/MockyBang/go-zero/tools/goctl/internal/version"
+	"github.com/MockyBang/go-zero/tools/goctl/kube"
+	"github.com/MockyBang/go-zero/tools/goctl/migrate"
+	"github.com/MockyBang/go-zero/tools/goctl/model/mongo"
+	model "github.com/MockyBang/go-zero/tools/goctl/model/sql/command"
+	"github.com/MockyBang/go-zero/tools/goctl/plugin"
+	rpc "github.com/MockyBang/go-zero/tools/goctl/rpc/cli"
+	"github.com/MockyBang/go-zero/tools/goctl/tpl"
+	"github.com/MockyBang/go-zero/tools/goctl/upgrade"
 	"github.com/logrusorgru/aurora"
 	"github.com/urfave/cli"
-	"github.com/zeromicro/go-zero/core/load"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/tools/goctl/api/apigen"
-	"github.com/zeromicro/go-zero/tools/goctl/api/dartgen"
-	"github.com/zeromicro/go-zero/tools/goctl/api/docgen"
-	"github.com/zeromicro/go-zero/tools/goctl/api/format"
-	"github.com/zeromicro/go-zero/tools/goctl/api/gogen"
-	"github.com/zeromicro/go-zero/tools/goctl/api/javagen"
-	"github.com/zeromicro/go-zero/tools/goctl/api/ktgen"
-	"github.com/zeromicro/go-zero/tools/goctl/api/new"
-	"github.com/zeromicro/go-zero/tools/goctl/api/tsgen"
-	"github.com/zeromicro/go-zero/tools/goctl/api/validate"
-	"github.com/zeromicro/go-zero/tools/goctl/bug"
-	"github.com/zeromicro/go-zero/tools/goctl/docker"
-	"github.com/zeromicro/go-zero/tools/goctl/internal/errorx"
-	"github.com/zeromicro/go-zero/tools/goctl/internal/version"
-	"github.com/zeromicro/go-zero/tools/goctl/kube"
-	"github.com/zeromicro/go-zero/tools/goctl/migrate"
-	"github.com/zeromicro/go-zero/tools/goctl/model/mongo"
-	model "github.com/zeromicro/go-zero/tools/goctl/model/sql/command"
-	"github.com/zeromicro/go-zero/tools/goctl/plugin"
-	rpc "github.com/zeromicro/go-zero/tools/goctl/rpc/cli"
-	"github.com/zeromicro/go-zero/tools/goctl/tpl"
-	"github.com/zeromicro/go-zero/tools/goctl/upgrade"
 )
 
 const codeFailure = 1
@@ -58,7 +58,7 @@ var commands = []cli.Command{
 			},
 			cli.StringFlag{
 				Name:  "version",
-				Usage: "the target release version of github.com/zeromicro/go-zero to migrate",
+				Usage: "the target release version of github.com/MockyBang/go-zero to migrate",
 			},
 		},
 	},
@@ -494,7 +494,7 @@ var commands = []cli.Command{
 					},
 					cli.StringFlag{
 						Name:  "style",
-						Usage: "the file naming format, see [https://github.com/zeromicro/go-zero/tree/master/tools/goctl/config/readme.md]",
+						Usage: "the file naming format, see [https://github.com/MockyBang/go-zero/tree/master/tools/goctl/config/readme.md]",
 					},
 					cli.StringFlag{
 						Name:  "home",

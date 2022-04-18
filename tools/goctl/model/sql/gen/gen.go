@@ -8,16 +8,16 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/zeromicro/go-zero/tools/goctl/config"
-	"github.com/zeromicro/go-zero/tools/goctl/model/sql/model"
-	"github.com/zeromicro/go-zero/tools/goctl/model/sql/parser"
-	"github.com/zeromicro/go-zero/tools/goctl/model/sql/template"
-	modelutil "github.com/zeromicro/go-zero/tools/goctl/model/sql/util"
-	"github.com/zeromicro/go-zero/tools/goctl/util"
-	"github.com/zeromicro/go-zero/tools/goctl/util/console"
-	"github.com/zeromicro/go-zero/tools/goctl/util/format"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
-	"github.com/zeromicro/go-zero/tools/goctl/util/stringx"
+	"github.com/MockyBang/go-zero/tools/goctl/config"
+	"github.com/MockyBang/go-zero/tools/goctl/model/sql/model"
+	"github.com/MockyBang/go-zero/tools/goctl/model/sql/parser"
+	"github.com/MockyBang/go-zero/tools/goctl/model/sql/template"
+	modelutil "github.com/MockyBang/go-zero/tools/goctl/model/sql/util"
+	"github.com/MockyBang/go-zero/tools/goctl/util"
+	"github.com/MockyBang/go-zero/tools/goctl/util/console"
+	"github.com/MockyBang/go-zero/tools/goctl/util/format"
+	"github.com/MockyBang/go-zero/tools/goctl/util/pathx"
+	"github.com/MockyBang/go-zero/tools/goctl/util/stringx"
 )
 
 const (

@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/MockyBang/go-zero/tools/goctl/api/parser"
 	"github.com/logrusorgru/aurora"
-	"github.com/zeromicro/go-zero/tools/goctl/api/parser"
 	"github.com/urfave/cli"
 )
 

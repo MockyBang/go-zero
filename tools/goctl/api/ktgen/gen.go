@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"text/template"
 
+	"github.com/MockyBang/go-zero/tools/goctl/api/spec"
 	"github.com/iancoleman/strcase"
-	"github.com/zeromicro/go-zero/tools/goctl/api/spec"
 )
 
 const (

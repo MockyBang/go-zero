@@ -7,10 +7,10 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/MockyBang/go-zero/tools/goctl/rpc/generator"
+	"github.com/MockyBang/go-zero/tools/goctl/util"
+	"github.com/MockyBang/go-zero/tools/goctl/util/pathx"
 	"github.com/emicklei/proto"
-	"github.com/zeromicro/go-zero/tools/goctl/rpc/generator"
-	"github.com/zeromicro/go-zero/tools/goctl/util"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
 	"github.com/urfave/cli"
 )
 
@@ -80,7 +80,7 @@ func ZRPC(c *cli.Context) error {
 		return err
 	}
 
-	var isGoolePlugin = len(grpcOut) > 0
+	isGoolePlugin := len(grpcOut) > 0
 	// If grpcOut is not empty means that user generates grpc code by
 	// https://google.golang.org/protobuf/cmd/protoc-gen-go and
 	// https://google.golang.org/grpc/cmd/protoc-gen-go-grpc,

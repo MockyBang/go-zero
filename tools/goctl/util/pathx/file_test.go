@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/MockyBang/go-zero/tools/goctl/internal/version"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/tools/goctl/internal/version"
 )
 
 func TestGetTemplateDir(t *testing.T) {

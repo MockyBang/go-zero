@@ -5,9 +5,9 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/zeromicro/go-zero/core/jsonx"
-	"github.com/zeromicro/go-zero/tools/goctl/rpc/execx"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
+	"github.com/MockyBang/go-zero/core/jsonx"
+	"github.com/MockyBang/go-zero/tools/goctl/rpc/execx"
+	"github.com/MockyBang/go-zero/tools/goctl/util/pathx"
 )
 
 // Module contains the relative data of go module,

@@ -4,9 +4,9 @@ import (
 	"sort"
 	"testing"
 
+	"github.com/MockyBang/go-zero/tools/goctl/api/parser/g4/ast"
+	"github.com/MockyBang/go-zero/tools/goctl/api/parser/g4/gen/api"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/tools/goctl/api/parser/g4/ast"
-	"github.com/zeromicro/go-zero/tools/goctl/api/parser/g4/gen/api"
 )
 
 var importAccept = func(p *api.ApiParserParser, visitor *ast.ApiVisitor) interface{} {

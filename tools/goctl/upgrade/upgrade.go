@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"runtime"
 
-	"github.com/zeromicro/go-zero/tools/goctl/rpc/execx"
+	"github.com/MockyBang/go-zero/tools/goctl/rpc/execx"
 	"github.com/urfave/cli"
 )
 
