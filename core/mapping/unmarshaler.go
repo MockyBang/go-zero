@@ -448,7 +448,15 @@ func (u *Unmarshaler) fillSlice(fieldType reflect.Type, value reflect.Value, map
 	dereffedBaseType := Deref(baseType)
 	dereffedBaseKind := dereffedBaseType.Kind()
 	refValue := reflect.ValueOf(mapValue)
+	if refValue.IsNil() {
+		return nil
+	}
+
 	conv := reflect.MakeSlice(reflect.SliceOf(baseType), refValue.Len(), refValue.Cap())
+	if refValue.Len() == 0 {
+		value.Set(conv)
+		return nil
+	}
 
 	var valid bool
 	for i := 0; i < refValue.Len(); i++ {

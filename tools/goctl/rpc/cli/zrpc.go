@@ -2,28 +2,22 @@ package cli
 
 import (
 	"errors"
-	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
 
-	"github.com/MockyBang/go-zero/tools/goctl/rpc/generator"
-	"github.com/MockyBang/go-zero/tools/goctl/util"
-	"github.com/MockyBang/go-zero/tools/goctl/util/pathx"
-	"github.com/emicklei/proto"
 	"github.com/urfave/cli"
+	"github.com/zeromicro/go-zero/tools/goctl/rpc/generator"
+	"github.com/zeromicro/go-zero/tools/goctl/util"
+	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
 )
 
 var (
-	errInvalidGrpcOutput = errors.New("ZRPC: missing grpc output")
+	errInvalidGrpcOutput = errors.New("ZRPC: missing --go-grpc_out")
+	errInvalidGoOutput   = errors.New("ZRPC: missing --go_out")
 	errInvalidZrpcOutput = errors.New("ZRPC: missing zrpc output, please use --zrpc_out to specify the output")
 	errInvalidInput      = errors.New("ZRPC: missing source")
 	errMultiInput        = errors.New("ZRPC: only one source is expected")
-)
-
-const (
-	optImport         = "import"
-	optSourceRelative = "source_relative"
 )
 
 // ZRPC generates grpc code directly by protoc and generates
@@ -40,22 +34,47 @@ func ZRPC(c *cli.Context) error {
 	if err != nil {
 		return err
 	}
-	src := filepath.Dir(source)
-	goPackage, protoPkg, err := getGoPackage(source)
-	if err != nil {
-		return err
-	}
 
-	grpcOut := c.String("go-grpc_out")
-	goOut := c.String("go_out")
-	goOpt := c.String("go_opt")
-	grpcOpt := c.String("go-grpc_opt")
+	grpcOutList := c.StringSlice("go-grpc_out")
+	goOutList := c.StringSlice("go_out")
 	zrpcOut := c.String("zrpc_out")
 	style := c.String("style")
 	home := c.String("home")
 	remote := c.String("remote")
+	branch := c.String("branch")
+	verbose := c.Bool("verbose")
+	if len(grpcOutList) == 0 {
+		return errInvalidGrpcOutput
+	}
+	if len(goOutList) == 0 {
+		return errInvalidGoOutput
+	}
+	goOut := goOutList[len(goOutList)-1]
+	grpcOut := grpcOutList[len(grpcOutList)-1]
+	if len(goOut) == 0 {
+		return errInvalidGrpcOutput
+	}
+	if len(zrpcOut) == 0 {
+		return errInvalidZrpcOutput
+	}
+	goOutAbs, err := filepath.Abs(goOut)
+	if err != nil {
+		return err
+	}
+	grpcOutAbs, err := filepath.Abs(grpcOut)
+	if err != nil {
+		return err
+	}
+	err = pathx.MkdirIfNotExist(goOutAbs)
+	if err != nil {
+		return err
+	}
+	err = pathx.MkdirIfNotExist(grpcOutAbs)
+	if err != nil {
+		return err
+	}
 	if len(remote) > 0 {
-		repo, _ := util.CloneIntoGitHome(remote)
+		repo, _ := util.CloneIntoGitHome(remote, branch)
 		if len(repo) > 0 {
 			home = repo
 		}
@@ -64,38 +83,11 @@ func ZRPC(c *cli.Context) error {
 	if len(home) > 0 {
 		pathx.RegisterGoctlHome(home)
 	}
-	if len(goOut) == 0 {
-		return errInvalidGrpcOutput
-	}
-	if len(zrpcOut) == 0 {
-		return errInvalidZrpcOutput
-	}
 	if !filepath.IsAbs(zrpcOut) {
 		zrpcOut = filepath.Join(pwd, zrpcOut)
 	}
 
-	goOut = removePluginFlag(goOut)
-	goOut, err = parseOutOut(src, goOut, goOpt, goPackage)
-	if err != nil {
-		return err
-	}
-
-	isGoolePlugin := len(grpcOut) > 0
-	// If grpcOut is not empty means that user generates grpc code by
-	// https://google.golang.org/protobuf/cmd/protoc-gen-go and
-	// https://google.golang.org/grpc/cmd/protoc-gen-go-grpc,
-	// for details please see https://grpc.io/docs/languages/go/quickstart/
-	if isGoolePlugin {
-		grpcOut, err = parseOutOut(src, grpcOut, grpcOpt, goPackage)
-		if err != nil {
-			return err
-		}
-	} else {
-		// Else it means that user generates grpc code by
-		// https://github.com/golang/protobuf/tree/master/protoc-gen-go
-		grpcOut = goOut
-	}
-
+	isGooglePlugin := len(grpcOut) > 0
 	goOut, err = filepath.Abs(goOut)
 	if err != nil {
 		return err
@@ -109,77 +101,15 @@ func ZRPC(c *cli.Context) error {
 		return err
 	}
 
-	if isGoolePlugin && grpcOut != goOut {
-		return fmt.Errorf("the --go_out and --go-grpc_out must be the same")
-	}
-
-	if goOut == zrpcOut || grpcOut == zrpcOut {
-		recommendName := goPackage
-		if len(recommendName) == 0 {
-			recommendName = protoPkg
-		}
-		return fmt.Errorf("the zrpc and grpc output can not be the same, it is recommended to output grpc to the %q",
-			filepath.Join(goOut, recommendName))
-	}
-
 	var ctx generator.ZRpcContext
 	ctx.Src = source
-	ctx.ProtoGenGoDir = goOut
-	ctx.ProtoGenGrpcDir = grpcOut
+	ctx.GoOutput = goOut
+	ctx.GrpcOutput = grpcOut
+	ctx.IsGooglePlugin = isGooglePlugin
 	ctx.Output = zrpcOut
 	ctx.ProtocCmd = strings.Join(protocArgs, " ")
-	g, err := generator.NewDefaultRPCGenerator(style, generator.WithZRpcContext(&ctx))
-	if err != nil {
-		return err
-	}
-
-	return g.Generate(source, zrpcOut, nil)
-}
-
-// parseOutOut calculates the output place to grpc code, about to calculate logic for details
-// please see https://developers.google.com/protocol-buffers/docs/reference/go-generated#invocation.
-func parseOutOut(sourceDir, grpcOut, grpcOpt, goPackage string) (string, error) {
-	if !filepath.IsAbs(grpcOut) {
-		grpcOut = filepath.Join(sourceDir, grpcOut)
-	}
-	switch grpcOpt {
-	case "", optImport:
-		grpcOut = filepath.Join(grpcOut, goPackage)
-	case optSourceRelative:
-		grpcOut = filepath.Join(grpcOut)
-	default:
-		return "", fmt.Errorf("parseAndSetGrpcOut:  unknown path type %q: want %q or %q",
-			grpcOpt, optImport, optSourceRelative)
-	}
-
-	return grpcOut, nil
-}
-
-func getGoPackage(source string) (string, string, error) {
-	r, err := os.Open(source)
-	if err != nil {
-		return "", "", err
-	}
-	defer func() {
-		_ = r.Close()
-	}()
-
-	parser := proto.NewParser(r)
-	set, err := parser.Parse()
-	if err != nil {
-		return "", "", err
-	}
-
-	var goPackage, protoPkg string
-	proto.Walk(set, proto.WithOption(func(option *proto.Option) {
-		if option.Name == "go_package" {
-			goPackage = option.Constant.Source
-		}
-	}), proto.WithPackage(func(p *proto.Package) {
-		protoPkg = p.Name
-	}))
-
-	return goPackage, protoPkg, nil
+	g := generator.NewGenerator(style, verbose)
+	return g.Generate(&ctx)
 }
 
 func removeGoctlFlag(args []string) []string {
@@ -188,11 +118,18 @@ func removeGoctlFlag(args []string) []string {
 	for step < len(args) {
 		arg := args[step]
 		switch {
-		case arg == "--style", arg == "--home", arg == "--zrpc_out":
+		case arg == "--style", arg == "--home",
+			arg == "--zrpc_out", arg == "--verbose",
+			arg == "-v", arg == "--remote",
+			arg == "--branch":
 			step += 2
 			continue
 		case strings.HasPrefix(arg, "--style="),
 			strings.HasPrefix(arg, "--home="),
+			strings.HasPrefix(arg, "--verbose="),
+			strings.HasPrefix(arg, "-v="),
+			strings.HasPrefix(arg, "--remote="),
+			strings.HasPrefix(arg, "--branch="),
 			strings.HasPrefix(arg, "--zrpc_out="):
 			step += 1
 			continue

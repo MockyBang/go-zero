@@ -36,10 +36,10 @@ func main() {
 	var c config.Config
 	conf.MustLoad(*configFile, &c)
 	ctx := svc.NewServiceContext(c)
-	srv := server.New{{.serviceNew}}Server(ctx)
+	svr := server.New{{.serviceNew}}Server(ctx)
 
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
-		{{.pkg}}.Register{{.service}}Server(grpcServer, srv)
+		{{.pkg}}.Register{{.service}}Server(grpcServer, svr)
 
 		if c.Mode == service.DevMode || c.Mode == service.TestMode {
 			reflection.Register(grpcServer)
@@ -53,7 +53,7 @@ func main() {
 `
 
 // GenMain generates the main file of the rpc service, which is an rpc service program call entry
-func (g *DefaultGenerator) GenMain(ctx DirContext, proto parser.Proto, cfg *conf.Config) error {
+func (g *Generator) GenMain(ctx DirContext, proto parser.Proto, cfg *conf.Config) error {
 	mainFilename, err := format.FileNamingFormat(cfg.NamingFormat, ctx.GetServiceName().Source())
 	if err != nil {
 		return err

@@ -10,11 +10,9 @@ import (
 	"io/fs"
 	"io/ioutil"
 	"os"
-	"os/signal"
 	"path/filepath"
 	"runtime"
 	"strings"
-	"syscall"
 	"time"
 
 	"github.com/MockyBang/go-zero/core/syncx"
@@ -23,9 +21,12 @@ import (
 	"github.com/MockyBang/go-zero/tools/goctl/vars"
 	"github.com/logrusorgru/aurora"
 	"github.com/urfave/cli"
+	"github.com/zeromicro/go-zero/tools/goctl/util/console"
+	"github.com/zeromicro/go-zero/tools/goctl/util/ctx"
+	"github.com/zeromicro/go-zero/tools/goctl/vars"
 )
 
-const MockyBangVersion = "1.3.0"
+const zeromicroVersion = "v1.3.0"
 
 const (
 	confirmUnknown = iota
@@ -60,8 +61,10 @@ func Migrate(c *cli.Context) error {
 	}
 
 	if verbose {
-		console.Success("[OK] refactor finish, execute %q on project root to check status.", "go test -race ./...")
+		console.Success("[OK] refactor finish, execute %q on project root to check status.",
+			"go test -race ./...")
 	}
+
 	return nil
 }
 
@@ -71,22 +74,7 @@ func rewriteImport(verbose bool) error {
 		time.Sleep(200 * time.Millisecond)
 	}
 
-	doneChan := syncx.NewDoneChan()
-	defer func() {
-		doneChan.Close()
-	}()
-	go func(dc *syncx.DoneChan) {
-		c := make(chan os.Signal)
-		signal.Notify(c, syscall.SIGTERM, syscall.SIGKILL, syscall.SIGINT, syscall.SIGTSTP, syscall.SIGQUIT)
-		select {
-		case <-c:
-			console.Error(`
-migrate failed, reason: "User Canceled"`)
-			os.Exit(0)
-		case <-dc.Done():
-			return
-		}
-	}(doneChan)
+	cancelOnSignals()
 
 	wd, err := os.Getwd()
 	if err != nil {
@@ -180,12 +168,12 @@ func writeFile(pkgs []*ast.Package, verbose bool) error {
 			w := bytes.NewBuffer(nil)
 			err := format.Node(w, fset, file)
 			if err != nil {
-				return fmt.Errorf("[rewriteImport] format file %s error: %+v", filename, err)
+				return fmt.Errorf("[rewriteImport] format file %s error: %w", filename, err)
 			}
 
 			err = ioutil.WriteFile(filename, w.Bytes(), os.ModePerm)
 			if err != nil {
-				return fmt.Errorf("[rewriteImport] write file %s error: %+v", filename, err)
+				return fmt.Errorf("[rewriteImport] write file %s error: %w", filename, err)
 			}
 			if verbose {
 				console.Success("[OK] migrated %q successfully", filepath.Base(filename))

@@ -9,8 +9,16 @@ English | [简体中文](readme-cn.md)
 [![Go Report Card](https://goreportcard.com/badge/github.com/MockyBang/go-zero)](https://goreportcard.com/report/github.com/MockyBang/go-zero)
 [![Release](https://img.shields.io/github/v/release/MockyBang/go-zero.svg?style=flat-square)](https://github.com/MockyBang/go-zero)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Discord](https://img.shields.io/discord/794530774463414292?label=chat&logo=discord)](https://discord.gg/4JQvC5A4Fe)
+<a href="https://www.producthunt.com/posts/go-zero?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-go&#0045;zero" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=334030&theme=light" alt="go&#0045;zero - A&#0032;web&#0032;&#0038;&#0032;rpc&#0032;framework&#0032;written&#0032;in&#0032;Go&#0046; | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" /></a>
 
-**Note: To meet the requirements of Open Source Foundation, we moved go-zero from tal-tech to MockyBang (a neutral GitHub organization).**
+> ***Important!***
+> 
+> To upgrade from versions eariler than v1.3.0, run the following commands.
+> 
+> `go install github.com/zeromicro/go-zero/tools/goctl@latest`
+> 
+> `goctl migrate —verbose —version v1.3.1`
 
 ## 0. what is go-zero
 
@@ -90,7 +98,7 @@ As below, go-zero protects the system with a couple of layers and mechanisms:
 Run the following command under your project:
 
 ```shell
-go get -u github.com/tal-tech/go-zero
+go get -u github.com/zeromicro/go-zero
 ```
 
 ## 6. Quick Start
@@ -107,10 +115,10 @@ go get -u github.com/tal-tech/go-zero
 
    ```shell
    # for Go 1.15 and earlier
-   GO111MODULE=on go get -u github.com/tal-tech/go-zero/tools/goctl@latest
+   GO111MODULE=on go get -u github.com/zeromicro/go-zero/tools/goctl@latest
    
    # for Go 1.16 and later
-   go install github.com/tal-tech/go-zero/tools/goctl@latest
+   go install github.com/zeromicro/go-zero/tools/goctl@latest
    ```
 
    make sure goctl is executable.
@@ -221,7 +229,7 @@ go get -u github.com/tal-tech/go-zero
 
 ## 9. Chat group
 
-Join the chat via https://join.slack.com/t/go-zero/shared_invite/zt-10ruju779-BE4y6lQNB_R21samtyKTgA
+Join the chat via https://discord.gg/4JQvC5A4Fe
 
 ## 10. Cloud Native Landscape
 

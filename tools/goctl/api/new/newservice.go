@@ -7,11 +7,11 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/MockyBang/go-zero/tools/goctl/api/gogen"
-	conf "github.com/MockyBang/go-zero/tools/goctl/config"
-	"github.com/MockyBang/go-zero/tools/goctl/util"
-	"github.com/MockyBang/go-zero/tools/goctl/util/pathx"
 	"github.com/urfave/cli"
+	"github.com/zeromicro/go-zero/tools/goctl/api/gogen"
+	conf "github.com/zeromicro/go-zero/tools/goctl/config"
+	"github.com/zeromicro/go-zero/tools/goctl/util"
+	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
 )
 
 const apiTemplate = `
@@ -67,8 +67,9 @@ func CreateServiceCommand(c *cli.Context) error {
 
 	home := c.String("home")
 	remote := c.String("remote")
+	branch := c.String("branch")
 	if len(remote) > 0 {
-		repo, _ := util.CloneIntoGitHome(remote)
+		repo, _ := util.CloneIntoGitHome(remote, branch)
 		if len(repo) > 0 {
 			home = repo
 		}

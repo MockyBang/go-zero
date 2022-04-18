@@ -16,6 +16,16 @@ import (
 	"github.com/MockyBang/go-zero/tools/goctl/util/pathx"
 	"github.com/logrusorgru/aurora"
 	"github.com/urfave/cli"
+	"github.com/zeromicro/go-zero/core/errorx"
+	"github.com/zeromicro/go-zero/tools/goctl/api/apigen"
+	"github.com/zeromicro/go-zero/tools/goctl/api/gogen"
+	apinew "github.com/zeromicro/go-zero/tools/goctl/api/new"
+	"github.com/zeromicro/go-zero/tools/goctl/docker"
+	"github.com/zeromicro/go-zero/tools/goctl/kube"
+	mongogen "github.com/zeromicro/go-zero/tools/goctl/model/mongo/generate"
+	modelgen "github.com/zeromicro/go-zero/tools/goctl/model/sql/gen"
+	rpcgen "github.com/zeromicro/go-zero/tools/goctl/rpc/generator"
+	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
 )
 
 const templateParentPath = "/"

@@ -7,9 +7,9 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/MockyBang/antlr"
-	"github.com/MockyBang/go-zero/tools/goctl/api/parser/g4/gen/api"
-	"github.com/MockyBang/go-zero/tools/goctl/util/console"
+	"github.com/zeromicro/antlr"
+	"github.com/zeromicro/go-zero/tools/goctl/api/parser/g4/gen/api"
+	"github.com/zeromicro/go-zero/tools/goctl/util/console"
 )
 
 type (
@@ -19,7 +19,8 @@ type (
 		debug      bool
 		log        console.Console
 		antlr.DefaultErrorListener
-		src string
+		src                      string
+		skipCheckTypeDeclaration bool
 	}
 
 	// ParserOption defines an function with argument Parser
@@ -114,13 +115,16 @@ func (p *Parser) parse(filename, content string) (*Api, error) {
 	apiAstList = append(apiAstList, root)
 	for _, imp := range root.Import {
 		dir := filepath.Dir(p.src)
-		imp := filepath.Join(dir, imp.Value.Text())
-		data, err := p.readContent(imp)
+		impPath := strings.ReplaceAll(imp.Value.Text(), "\"", "")
+		if !filepath.IsAbs(impPath) {
+			impPath = filepath.Join(dir, impPath)
+		}
+		data, err := p.readContent(impPath)
 		if err != nil {
 			return nil, err
 		}
 
-		nestedApi, err := p.invoke(imp, data)
+		nestedApi, err := p.invoke(impPath, data)
 		if err != nil {
 			return nil, err
 		}
@@ -133,9 +137,11 @@ func (p *Parser) parse(filename, content string) (*Api, error) {
 		apiAstList = append(apiAstList, nestedApi)
 	}
 
-	err = p.checkTypeDeclaration(apiAstList)
-	if err != nil {
-		return nil, err
+	if !p.skipCheckTypeDeclaration {
+		err = p.checkTypeDeclaration(apiAstList)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	allApi := p.memberFill(apiAstList)
@@ -478,5 +484,11 @@ func WithParserDebug() ParserOption {
 func WithParserPrefix(prefix string) ParserOption {
 	return func(p *Parser) {
 		p.linePrefix = prefix
+	}
+}
+
+func WithParserSkipCheckTypeDeclaration() ParserOption {
+	return func(p *Parser) {
+		p.skipCheckTypeDeclaration = true
 	}
 }

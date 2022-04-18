@@ -1,6 +1,7 @@
 package sqlx
 
 import (
+	"context"
 	"fmt"
 	"strconv"
 	"strings"
@@ -66,7 +67,7 @@ func format(query string, args ...interface{}) (string, error) {
 
 			writeValue(&b, args[argIndex])
 			argIndex++
-		case '$':
+		case ':', '$':
 			var j int
 			for j = i + 1; j < bytes; j++ {
 				char := query[j]
@@ -74,16 +75,18 @@ func format(query string, args ...interface{}) (string, error) {
 					break
 				}
 			}
+
 			if j > i+1 {
 				index, err := strconv.Atoi(query[i+1 : j])
 				if err != nil {
 					return "", err
 				}
 
-				// index starts from 1 for pg
+				// index starts from 1 for pg or oracle
 				if index > argIndex {
 					argIndex = index
 				}
+
 				index--
 				if index < 0 || numArgs <= index {
 					return "", fmt.Errorf("error: wrong index %d in sql", index)
@@ -109,9 +112,9 @@ func logInstanceError(datasource string, err error) {
 	logx.Errorf("Error on getting sql instance of %s: %v", datasource, err)
 }
 
-func logSqlError(stmt string, err error) {
+func logSqlError(ctx context.Context, stmt string, err error) {
 	if err != nil && err != ErrNotFound {
-		logx.Errorf("stmt: %s, error: %s", stmt, err.Error())
+		logx.WithContext(ctx).Errorf("stmt: %s, error: %s", stmt, err.Error())
 	}
 }
 

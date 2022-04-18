@@ -1,13 +1,18 @@
 package rest
 
 import (
+	"context"
 	"errors"
 	"net/http"
+	"net/http/httptest"
+	"sync/atomic"
 	"testing"
 	"time"
 
 	"github.com/MockyBang/go-zero/core/conf"
 	"github.com/stretchr/testify/assert"
+	"github.com/zeromicro/go-zero/core/conf"
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
 func TestNewEngine(t *testing.T) {
@@ -188,6 +193,110 @@ func TestEngine_checkedTimeout(t *testing.T) {
 	for _, test := range tests {
 		assert.Equal(t, test.expect, ng.checkedTimeout(test.timeout))
 	}
+}
+
+func TestEngine_checkedMaxBytes(t *testing.T) {
+	tests := []struct {
+		name     string
+		maxBytes int64
+		expect   int64
+	}{
+		{
+			name:   "not set",
+			expect: 1000,
+		},
+		{
+			name:     "less",
+			maxBytes: 500,
+			expect:   500,
+		},
+		{
+			name:     "equal",
+			maxBytes: 1000,
+			expect:   1000,
+		},
+		{
+			name:     "more",
+			maxBytes: 1500,
+			expect:   1500,
+		},
+	}
+
+	ng := newEngine(RestConf{
+		MaxBytes: 1000,
+	})
+	for _, test := range tests {
+		assert.Equal(t, test.expect, ng.checkedMaxBytes(test.maxBytes))
+	}
+}
+
+func TestEngine_notFoundHandler(t *testing.T) {
+	logx.Disable()
+
+	ng := newEngine(RestConf{})
+	ts := httptest.NewServer(ng.notFoundHandler(nil))
+	defer ts.Close()
+
+	client := ts.Client()
+	err := func(ctx context.Context) error {
+		req, err := http.NewRequest("GET", ts.URL+"/bad", nil)
+		assert.Nil(t, err)
+		res, err := client.Do(req)
+		assert.Nil(t, err)
+		assert.Equal(t, http.StatusNotFound, res.StatusCode)
+		return res.Body.Close()
+	}(context.Background())
+
+	assert.Nil(t, err)
+}
+
+func TestEngine_notFoundHandlerNotNil(t *testing.T) {
+	logx.Disable()
+
+	ng := newEngine(RestConf{})
+	var called int32
+	ts := httptest.NewServer(ng.notFoundHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		atomic.AddInt32(&called, 1)
+	})))
+	defer ts.Close()
+
+	client := ts.Client()
+	err := func(ctx context.Context) error {
+		req, err := http.NewRequest("GET", ts.URL+"/bad", nil)
+		assert.Nil(t, err)
+		res, err := client.Do(req)
+		assert.Nil(t, err)
+		assert.Equal(t, http.StatusNotFound, res.StatusCode)
+		return res.Body.Close()
+	}(context.Background())
+
+	assert.Nil(t, err)
+	assert.Equal(t, int32(1), atomic.LoadInt32(&called))
+}
+
+func TestEngine_notFoundHandlerNotNilWriteHeader(t *testing.T) {
+	logx.Disable()
+
+	ng := newEngine(RestConf{})
+	var called int32
+	ts := httptest.NewServer(ng.notFoundHandler(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		atomic.AddInt32(&called, 1)
+		w.WriteHeader(http.StatusExpectationFailed)
+	})))
+	defer ts.Close()
+
+	client := ts.Client()
+	err := func(ctx context.Context) error {
+		req, err := http.NewRequest("GET", ts.URL+"/bad", nil)
+		assert.Nil(t, err)
+		res, err := client.Do(req)
+		assert.Nil(t, err)
+		assert.Equal(t, http.StatusExpectationFailed, res.StatusCode)
+		return res.Body.Close()
+	}(context.Background())
+
+	assert.Nil(t, err)
+	assert.Equal(t, int32(1), atomic.LoadInt32(&called))
 }
 
 type mockedRouter struct{}

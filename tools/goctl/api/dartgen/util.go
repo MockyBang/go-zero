@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"path"
 	"strings"
 
 	"github.com/MockyBang/go-zero/tools/goctl/api/spec"
@@ -34,18 +35,16 @@ func pathToFuncName(path string) string {
 	return util.ToLower(camel[:1]) + camel[1:]
 }
 
-func tagGet(tag, k string) string {
-	tags, err := spec.Parse(tag)
-	if err != nil {
-		panic(k + " not exist")
-	}
+func getBaseName(str string) string {
+	return path.Base(str)
+}
 
-	v, err := tags.Get(k)
+func getPropertyFromMember(member spec.Member) string {
+	name, err := member.GetPropertyName()
 	if err != nil {
-		panic(k + " value not exist")
+		panic(fmt.Sprintf("cannot get property name of %q", member.Name))
 	}
-
-	return v.Name
+	return name
 }
 
 func isDirectType(s string) bool {
@@ -129,11 +128,10 @@ func specTypeToDart(tp spec.Type) (string, error) {
 		}
 
 		s := getBaseType(valueType)
-		if len(s) == 0 {
-			return s, errors.New("unsupported primitive type " + tp.Name())
+		if len(s) != 0 {
+			return s, nil
 		}
-
-		return s, nil
+		return fmt.Sprintf("List<%s>", valueType), nil
 	case spec.InterfaceType:
 		return "Object", nil
 	case spec.PointerType:

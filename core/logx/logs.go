@@ -72,10 +72,10 @@ var (
 	// ErrLogServiceNameNotSet is an error that indicates that the service name is not set.
 	ErrLogServiceNameNotSet = errors.New("log service name must be set")
 
-	timeFormat   = "2006-01-02T15:04:05.000Z07"
+	timeFormat   = "2006-01-02T15:04:05.000Z07:00"
 	writeConsole bool
 	logLevel     uint32
-	encoding     = jsonEncodingType
+	encoding     uint32 = jsonEncodingType
 	// use uint32 for atomic operations
 	disableStat uint32
 	infoLog     io.WriteCloser
@@ -137,9 +137,9 @@ func SetUp(c LogConf) error {
 	}
 	switch c.Encoding {
 	case plainEncoding:
-		encoding = plainEncodingType
+		atomic.StoreUint32(&encoding, plainEncodingType)
 	default:
-		encoding = jsonEncodingType
+		atomic.StoreUint32(&encoding, jsonEncodingType)
 	}
 
 	switch c.Mode {
@@ -424,7 +424,7 @@ func infoTextSync(msg string) {
 }
 
 func outputAny(writer io.Writer, level string, val interface{}) {
-	switch encoding {
+	switch atomic.LoadUint32(&encoding) {
 	case plainEncodingType:
 		writePlainAny(writer, level, val)
 	default:
@@ -438,7 +438,7 @@ func outputAny(writer io.Writer, level string, val interface{}) {
 }
 
 func outputText(writer io.Writer, level, msg string) {
-	switch encoding {
+	switch atomic.LoadUint32(&encoding) {
 	case plainEncodingType:
 		writePlainText(writer, level, msg)
 	default:

@@ -13,6 +13,8 @@ import (
 	"github.com/MockyBang/go-zero/tools/goctl/util/pathx"
 	"github.com/logrusorgru/aurora"
 	"github.com/urfave/cli"
+	"github.com/zeromicro/go-zero/tools/goctl/util"
+	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
 )
 
 const (
@@ -24,14 +26,17 @@ const (
 
 // Docker describes a dockerfile
 type Docker struct {
-	Chinese   bool
-	GoRelPath string
-	GoFile    string
-	ExeFile   string
-	HasPort   bool
-	Port      int
-	Argument  string
-	Version   string
+	Chinese     bool
+	GoRelPath   string
+	GoFile      string
+	ExeFile     string
+	BaseImage   string
+	HasPort     bool
+	Port        int
+	Argument    string
+	Version     string
+	HasTimezone bool
+	Timezone    string
 }
 
 // DockerCommand provides the entry for goctl docker
@@ -46,8 +51,10 @@ func DockerCommand(c *cli.Context) (err error) {
 	home := c.String("home")
 	version := c.String("version")
 	remote := c.String("remote")
+	branch := c.String("branch")
+	timezone := c.String("tz")
 	if len(remote) > 0 {
-		repo, _ := util.CloneIntoGitHome(remote)
+		repo, _ := util.CloneIntoGitHome(remote, branch)
 		if len(repo) > 0 {
 			home = repo
 		}
@@ -69,9 +76,10 @@ func DockerCommand(c *cli.Context) (err error) {
 		return fmt.Errorf("file %q not found", goFile)
 	}
 
+	base := c.String("base")
 	port := c.Int("port")
 	if _, err := os.Stat(etcDir); os.IsNotExist(err) {
-		return generateDockerfile(goFile, port, version)
+		return generateDockerfile(goFile, base, port, version, timezone)
 	}
 
 	cfg, err := findConfig(goFile, etcDir)
@@ -79,7 +87,7 @@ func DockerCommand(c *cli.Context) (err error) {
 		return err
 	}
 
-	if err := generateDockerfile(goFile, port, version, "-f", "etc/"+cfg); err != nil {
+	if err := generateDockerfile(goFile, base, port, version, timezone, "-f", "etc/"+cfg); err != nil {
 		return err
 	}
 
@@ -120,7 +128,7 @@ func findConfig(file, dir string) (string, error) {
 	return files[0], nil
 }
 
-func generateDockerfile(goFile string, port int, version string, args ...string) error {
+func generateDockerfile(goFile, base string, port int, version, timezone string, args ...string) error {
 	projPath, err := getFilePath(filepath.Dir(goFile))
 	if err != nil {
 		return err
@@ -149,14 +157,17 @@ func generateDockerfile(goFile string, port int, version string, args ...string)
 	_, offset := time.Now().Zone()
 	t := template.Must(template.New("dockerfile").Parse(text))
 	return t.Execute(out, Docker{
-		Chinese:   offset == cstOffset,
-		GoRelPath: projPath,
-		GoFile:    goFile,
-		ExeFile:   pathx.FileNameWithoutExt(filepath.Base(goFile)),
-		HasPort:   port > 0,
-		Port:      port,
-		Argument:  builder.String(),
-		Version:   version,
+		Chinese:     offset == cstOffset,
+		GoRelPath:   projPath,
+		GoFile:      goFile,
+		ExeFile:     pathx.FileNameWithoutExt(filepath.Base(goFile)),
+		BaseImage:   base,
+		HasPort:     port > 0,
+		Port:        port,
+		Argument:    builder.String(),
+		Version:     version,
+		HasTimezone: len(timezone) > 0,
+		Timezone:    timezone,
 	})
 }
 

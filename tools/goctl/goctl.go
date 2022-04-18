@@ -31,6 +31,31 @@ import (
 	"github.com/MockyBang/go-zero/tools/goctl/upgrade"
 	"github.com/logrusorgru/aurora"
 	"github.com/urfave/cli"
+	"github.com/zeromicro/go-zero/core/load"
+	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/tools/goctl/api/apigen"
+	"github.com/zeromicro/go-zero/tools/goctl/api/dartgen"
+	"github.com/zeromicro/go-zero/tools/goctl/api/docgen"
+	"github.com/zeromicro/go-zero/tools/goctl/api/format"
+	"github.com/zeromicro/go-zero/tools/goctl/api/gogen"
+	"github.com/zeromicro/go-zero/tools/goctl/api/javagen"
+	"github.com/zeromicro/go-zero/tools/goctl/api/ktgen"
+	"github.com/zeromicro/go-zero/tools/goctl/api/new"
+	"github.com/zeromicro/go-zero/tools/goctl/api/tsgen"
+	"github.com/zeromicro/go-zero/tools/goctl/api/validate"
+	"github.com/zeromicro/go-zero/tools/goctl/bug"
+	"github.com/zeromicro/go-zero/tools/goctl/completion"
+	"github.com/zeromicro/go-zero/tools/goctl/docker"
+	"github.com/zeromicro/go-zero/tools/goctl/env"
+	"github.com/zeromicro/go-zero/tools/goctl/internal/version"
+	"github.com/zeromicro/go-zero/tools/goctl/kube"
+	"github.com/zeromicro/go-zero/tools/goctl/migrate"
+	"github.com/zeromicro/go-zero/tools/goctl/model/mongo"
+	model "github.com/zeromicro/go-zero/tools/goctl/model/sql/command"
+	"github.com/zeromicro/go-zero/tools/goctl/plugin"
+	rpc "github.com/zeromicro/go-zero/tools/goctl/rpc/cli"
+	"github.com/zeromicro/go-zero/tools/goctl/tpl"
+	"github.com/zeromicro/go-zero/tools/goctl/upgrade"
 )
 
 const codeFailure = 1
@@ -45,6 +70,38 @@ var commands = []cli.Command{
 		Name:   "upgrade",
 		Usage:  "upgrade goctl to latest version",
 		Action: upgrade.Upgrade,
+	},
+	{
+		Name:  "env",
+		Usage: "check or edit goctl environment",
+		Flags: []cli.Flag{
+			cli.StringSliceFlag{
+				Name:  "write, w",
+				Usage: "edit goctl environment",
+			},
+		},
+		Subcommands: []cli.Command{
+			{
+				Name:  "check",
+				Usage: "detect goctl env and dependency tools",
+				Flags: []cli.Flag{
+					cli.BoolFlag{
+						Name:  "install, i",
+						Usage: "install dependencies if not found",
+					},
+					cli.BoolFlag{
+						Name:  "force, f",
+						Usage: "silent installation of non-existent dependencies",
+					},
+					cli.BoolFlag{
+						Name:  "verbose, v",
+						Usage: "enable log output",
+					},
+				},
+				Action: env.Check,
+			},
+		},
+		Action: env.Action,
 	},
 	{
 		Name:        "migrate",
@@ -81,6 +138,10 @@ var commands = []cli.Command{
 					"if they are, --remote has higher priority\n\tThe git repo directory must be consistent with the " +
 					"https://github.com/MockyBang/go-zero-template directory structure",
 			},
+			cli.StringFlag{
+				Name:  "branch",
+				Usage: "the branch of the remote repo, it does work with --remote",
+			},
 		},
 		Action: apigen.ApiCommand,
 		Subcommands: []cli.Command{
@@ -99,6 +160,10 @@ var commands = []cli.Command{
 						Usage: "the remote git repo of the template, --home and --remote cannot be set at the same time, " +
 							"if they are, --remote has higher priority\n\tThe git repo directory must be consistent with the " +
 							"https://github.com/MockyBang/go-zero-template directory structure",
+					},
+					cli.StringFlag{
+						Name:  "branch",
+						Usage: "the branch of the remote repo, it does work with --remote",
 					},
 					cli.StringFlag{
 						Name:  "style",
@@ -121,6 +186,10 @@ var commands = []cli.Command{
 					cli.BoolFlag{
 						Name:  "stdin",
 						Usage: "use stdin to input api doc content, press \"ctrl + d\" to send EOF",
+					},
+					cli.BoolFlag{
+						Name:  "declare",
+						Usage: "use to skip check api types already declare",
 					},
 				},
 				Action: format.GoFormatApi,
@@ -179,6 +248,10 @@ var commands = []cli.Command{
 							"if they are, --remote has higher priority\n\tThe git repo directory must be consistent with the " +
 							"https://github.com/MockyBang/go-zero-template directory structure",
 					},
+					cli.StringFlag{
+						Name:  "branch",
+						Usage: "the branch of the remote repo, it does work with --remote",
+					},
 				},
 				Action: gogen.GoCommand,
 			},
@@ -236,6 +309,14 @@ var commands = []cli.Command{
 						Name:  "api",
 						Usage: "the api file",
 					},
+					cli.BoolFlag{
+						Name:  "legacy",
+						Usage: "legacy generator for flutter v1",
+					},
+					cli.StringFlag{
+						Name:  "hostname",
+						Usage: "hostname of the server",
+					},
 				},
 				Action: dartgen.DartCommand,
 			},
@@ -291,6 +372,11 @@ var commands = []cli.Command{
 				Name:  "go",
 				Usage: "the file that contains main function",
 			},
+			cli.StringFlag{
+				Name:  "base",
+				Usage: "the base image to build the docker image, default scratch",
+				Value: "scratch",
+			},
 			cli.IntFlag{
 				Name:  "port",
 				Usage: "the port to expose, default none",
@@ -308,8 +394,17 @@ var commands = []cli.Command{
 					"https://github.com/MockyBang/go-zero-template directory structure",
 			},
 			cli.StringFlag{
+				Name:  "branch",
+				Usage: "the branch of the remote repo, it does work with --remote",
+			},
+			cli.StringFlag{
 				Name:  "version",
 				Usage: "the goctl builder golang image version",
+			},
+			cli.StringFlag{
+				Name:  "tz",
+				Usage: "the timezone of the container",
+				Value: "Asia/Shanghai",
 			},
 		},
 		Action: docker.DockerCommand,
@@ -407,6 +502,14 @@ var commands = []cli.Command{
 							"if they are, --remote has higher priority\n\tThe git repo directory must be consistent with the " +
 							"https://github.com/MockyBang/go-zero-template directory structure",
 					},
+					cli.StringFlag{
+						Name:  "branch",
+						Usage: "the branch of the remote repo, it does work with --remote",
+					},
+					cli.StringFlag{
+						Name:  "serviceAccount",
+						Usage: "the ServiceAccount for the deployment",
+					},
 				},
 				Action: kube.DeploymentCommand,
 			},
@@ -417,9 +520,8 @@ var commands = []cli.Command{
 		Usage: "generate rpc code",
 		Subcommands: []cli.Command{
 			{
-				Name:        "new",
-				Usage:       `generate rpc demo service`,
-				Description: aurora.Yellow(`deprecated: zrpc code generation use "goctl rpc protoc" instead, for the details see "goctl rpc protoc --help"`).String(),
+				Name:  "new",
+				Usage: `generate rpc demo service`,
 				Flags: []cli.Flag{
 					cli.StringFlag{
 						Name:  "style",
@@ -439,6 +541,14 @@ var commands = []cli.Command{
 						Usage: "the remote git repo of the template, --home and --remote cannot be set at the same time, " +
 							"if they are, --remote has higher priority\n\tThe git repo directory must be consistent with the " +
 							"https://github.com/MockyBang/go-zero-template directory structure",
+					},
+					cli.StringFlag{
+						Name:  "branch",
+						Usage: "the branch of the remote repo, it does work with --remote",
+					},
+					cli.BoolFlag{
+						Name:  "verbose, v",
+						Usage: "enable log output",
 					},
 				},
 				Action: rpc.RPCNew,
@@ -462,30 +572,42 @@ var commands = []cli.Command{
 							"if they are, --remote has higher priority\n\tThe git repo directory must be consistent with the " +
 							"https://github.com/MockyBang/go-zero-template directory structure",
 					},
+					cli.StringFlag{
+						Name:  "branch",
+						Usage: "the branch of the remote repo, it does work with --remote",
+					},
 				},
 				Action: rpc.RPCTemplate,
 			},
 			{
 				Name:        "protoc",
 				Usage:       "generate grpc code",
-				UsageText:   `example: goctl rpc protoc xx.proto --go_out=./pb --go-grpc=./pb --zrpc_out=.`,
+				UsageText:   `example: goctl rpc protoc xx.proto --go_out=./pb --go-grpc_out=./pb --zrpc_out=.`,
 				Description: "for details, see https://go-zero.dev/cn/goctl-rpc.html",
 				Action:      rpc.ZRPC,
 				Flags: []cli.Flag{
-					cli.StringFlag{
+					cli.StringSliceFlag{
 						Name:   "go_out",
 						Hidden: true,
 					},
-					cli.StringFlag{
+					cli.StringSliceFlag{
 						Name:   "go-grpc_out",
 						Hidden: true,
 					},
-					cli.StringFlag{
+					cli.StringSliceFlag{
 						Name:   "go_opt",
 						Hidden: true,
 					},
-					cli.StringFlag{
+					cli.StringSliceFlag{
 						Name:   "go-grpc_opt",
+						Hidden: true,
+					},
+					cli.StringSliceFlag{
+						Name:   "plugin",
+						Hidden: true,
+					},
+					cli.StringSliceFlag{
+						Name:   "proto_path,I",
 						Hidden: true,
 					},
 					cli.StringFlag{
@@ -506,50 +628,15 @@ var commands = []cli.Command{
 							"if they are, --remote has higher priority\n\tThe git repo directory must be consistent with the " +
 							"https://github.com/MockyBang/go-zero-template directory structure",
 					},
-				},
-			},
-			{
-				Name:        "proto",
-				Usage:       `generate rpc from proto`,
-				Description: aurora.Yellow(`deprecated: zrpc code generation use "goctl rpc protoc" instead, for the details see "goctl rpc protoc --help"`).String(),
-				Flags: []cli.Flag{
 					cli.StringFlag{
-						Name:  "src, s",
-						Usage: "the file path of the proto source file",
-					},
-					cli.StringSliceFlag{
-						Name:  "proto_path, I",
-						Usage: `native command of protoc, specify the directory in which to search for imports. [optional]`,
-					},
-					cli.StringSliceFlag{
-						Name:  "go_opt",
-						Usage: `native command of protoc-gen-go, specify the mapping from proto to go, eg --go_opt=proto_import=go_package_import. [optional]`,
-					},
-					cli.StringFlag{
-						Name:  "dir, d",
-						Usage: `the target path of the code`,
-					},
-					cli.StringFlag{
-						Name:  "style",
-						Usage: "the file naming format, see [https://github.com/MockyBang/go-zero/tree/master/tools/goctl/config/readme.md]",
+						Name:  "branch",
+						Usage: "the branch of the remote repo, it does work with --remote",
 					},
 					cli.BoolFlag{
-						Name:  "idea",
-						Usage: "whether the command execution environment is from idea plugin. [optional]",
-					},
-					cli.StringFlag{
-						Name: "home",
-						Usage: "the goctl home path of the template, --home and --remote cannot be set at the same time, " +
-							"if they are, --remote has higher priority",
-					},
-					cli.StringFlag{
-						Name: "remote",
-						Usage: "the remote git repo of the template, --home and --remote cannot be set at the same time, " +
-							"if they are, --remote has higher priority\n\tThe git repo directory must be consistent with the " +
-							"https://github.com/MockyBang/go-zero-template directory structure",
+						Name:  "verbose, v",
+						Usage: "enable log output",
 					},
 				},
-				Action: rpc.RPC,
 			},
 		},
 	},
@@ -600,6 +687,10 @@ var commands = []cli.Command{
 									"if they are, --remote has higher priority\n\tThe git repo directory must be consistent with the " +
 									"https://github.com/MockyBang/go-zero-template directory structure",
 							},
+							cli.StringFlag{
+								Name:  "branch",
+								Usage: "the branch of the remote repo, it does work with --remote",
+							},
 						},
 						Action: model.MysqlDDL,
 					},
@@ -642,6 +733,10 @@ var commands = []cli.Command{
 									"if they are, --remote has higher priority\n\tThe git repo directory must be consistent with the " +
 									"https://github.com/MockyBang/go-zero-template directory structure",
 							},
+							cli.StringFlag{
+								Name:  "branch",
+								Usage: "the branch of the remote repo, it does work with --remote",
+							},
 						},
 						Action: model.MySqlDataSource,
 					},
@@ -657,7 +752,7 @@ var commands = []cli.Command{
 						Flags: []cli.Flag{
 							cli.StringFlag{
 								Name:  "url",
-								Usage: `the data source of database,like "postgres://root:password@127.0.0.1:54332/database?sslmode=disable"`,
+								Usage: `the data source of database,like "postgres://root:password@127.0.0.1:5432/database?sslmode=disable"`,
 							},
 							cli.StringFlag{
 								Name:  "table, t",
@@ -694,6 +789,10 @@ var commands = []cli.Command{
 									"if they are, --remote has higher priority\n\tThe git repo directory must be consistent with the " +
 									"https://github.com/MockyBang/go-zero-template directory structure",
 							},
+							cli.StringFlag{
+								Name:  "branch",
+								Usage: "the branch of the remote repo, it does work with --remote",
+							},
 						},
 						Action: model.PostgreSqlDataSource,
 					},
@@ -729,6 +828,10 @@ var commands = []cli.Command{
 						Usage: "the remote git repo of the template, --home and --remote cannot be set at the same time, " +
 							"if they are, --remote has higher priority\n\tThe git repo directory must be consistent with the " +
 							"https://github.com/MockyBang/go-zero-template directory structure",
+					},
+					cli.StringFlag{
+						Name:  "branch",
+						Usage: "the branch of the remote repo, it does work with --remote",
 					},
 				},
 				Action: mongo.Action,
@@ -797,20 +900,36 @@ var commands = []cli.Command{
 			},
 		},
 	},
+	{
+		Name:   "completion",
+		Usage:  "generation completion script, it only works for unix-like OS",
+		Action: completion.Completion,
+		Flags: []cli.Flag{
+			cli.StringFlag{
+				Name:  "name, n",
+				Usage: "the filename of auto complete script, default is [goctl_autocomplete]",
+			},
+		},
+	},
 }
 
 func main() {
 	logx.Disable()
 	load.Disable()
 
+	cli.BashCompletionFlag = cli.BoolFlag{
+		Name:   completion.BashCompletionFlag,
+		Hidden: true,
+	}
 	app := cli.NewApp()
+	app.EnableBashCompletion = true
 	app.Usage = "a cli tool to generate code"
 	app.Version = fmt.Sprintf("%s %s/%s", version.BuildVersion, runtime.GOOS, runtime.GOARCH)
 	app.Commands = commands
 
-	// cli already print error messages
+	// cli already print error messages.
 	if err := app.Run(os.Args); err != nil {
-		fmt.Println(aurora.Red(errorx.Wrap(err).Error()))
+		fmt.Println(aurora.Red(err.Error()))
 		os.Exit(codeFailure)
 	}
 }

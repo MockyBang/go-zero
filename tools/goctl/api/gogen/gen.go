@@ -20,6 +20,13 @@ import (
 	"github.com/MockyBang/go-zero/tools/goctl/util/pathx"
 	"github.com/logrusorgru/aurora"
 	"github.com/urfave/cli"
+	"github.com/zeromicro/go-zero/core/logx"
+	apiformat "github.com/zeromicro/go-zero/tools/goctl/api/format"
+	"github.com/zeromicro/go-zero/tools/goctl/api/parser"
+	apiutil "github.com/zeromicro/go-zero/tools/goctl/api/util"
+	"github.com/zeromicro/go-zero/tools/goctl/config"
+	"github.com/zeromicro/go-zero/tools/goctl/util"
+	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
 )
 
 const tmpFile = "%s-%d"
@@ -33,8 +40,9 @@ func GoCommand(c *cli.Context) error {
 	namingStyle := c.String("style")
 	home := c.String("home")
 	remote := c.String("remote")
+	branch := c.String("branch")
 	if len(remote) > 0 {
-		repo, _ := util.CloneIntoGitHome(remote)
+		repo, _ := util.CloneIntoGitHome(remote, branch)
 		if len(repo) > 0 {
 			home = repo
 		}
@@ -85,7 +93,7 @@ func DoGenProject(apiFile, dir, style string) error {
 		return err
 	}
 
-	if err := apiformat.ApiFormatByPath(apiFile); err != nil {
+	if err := apiformat.ApiFormatByPath(apiFile, false); err != nil {
 		return err
 	}
 

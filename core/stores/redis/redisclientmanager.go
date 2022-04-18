@@ -4,8 +4,8 @@ import (
 	"crypto/tls"
 	"io"
 
-	"github.com/MockyBang/go-zero/core/syncx"
-	red "github.com/go-redis/redis"
+	red "github.com/go-redis/redis/v8"
+	"github.com/zeromicro/go-zero/core/syncx"
 )
 
 const (
@@ -34,7 +34,8 @@ func getClient(r *Redis) (*red.Client, error) {
 			PoolSize:     r.PoolSize,
 			PoolTimeout:  r.PoolTimeout,
 		})
-		store.WrapProcess(checkDuration)
+		store.AddHook(durationHook)
+
 		return store, nil
 	})
 	if err != nil {

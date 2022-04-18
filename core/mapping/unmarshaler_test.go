@@ -198,6 +198,49 @@ func TestUnmarshalIntWithDefault(t *testing.T) {
 	assert.Equal(t, 1, in.Int)
 }
 
+func TestUnmarshalBoolSliceRequired(t *testing.T) {
+	type inner struct {
+		Bools []bool `key:"bools"`
+	}
+
+	var in inner
+	assert.NotNil(t, UnmarshalKey(map[string]interface{}{}, &in))
+}
+
+func TestUnmarshalBoolSliceNil(t *testing.T) {
+	type inner struct {
+		Bools []bool `key:"bools,optional"`
+	}
+
+	var in inner
+	assert.Nil(t, UnmarshalKey(map[string]interface{}{}, &in))
+	assert.Nil(t, in.Bools)
+}
+
+func TestUnmarshalBoolSliceNilExplicit(t *testing.T) {
+	type inner struct {
+		Bools []bool `key:"bools,optional"`
+	}
+
+	var in inner
+	assert.Nil(t, UnmarshalKey(map[string]interface{}{
+		"bools": nil,
+	}, &in))
+	assert.Nil(t, in.Bools)
+}
+
+func TestUnmarshalBoolSliceEmpty(t *testing.T) {
+	type inner struct {
+		Bools []bool `key:"bools,optional"`
+	}
+
+	var in inner
+	assert.Nil(t, UnmarshalKey(map[string]interface{}{
+		"bools": []bool{},
+	}, &in))
+	assert.Empty(t, in.Bools)
+}
+
 func TestUnmarshalBoolSliceWithDefault(t *testing.T) {
 	type inner struct {
 		Bools []bool `key:"bools,default=[true,false]"`
@@ -330,28 +373,34 @@ func TestUnmarshalFloat(t *testing.T) {
 
 func TestUnmarshalInt64Slice(t *testing.T) {
 	var v struct {
-		Ages []int64 `key:"ages"`
+		Ages  []int64 `key:"ages"`
+		Slice []int64 `key:"slice"`
 	}
 	m := map[string]interface{}{
-		"ages": []int64{1, 2},
+		"ages":  []int64{1, 2},
+		"slice": []interface{}{},
 	}
 
 	ast := assert.New(t)
 	ast.Nil(UnmarshalKey(m, &v))
 	ast.ElementsMatch([]int64{1, 2}, v.Ages)
+	ast.Equal([]int64{}, v.Slice)
 }
 
 func TestUnmarshalIntSlice(t *testing.T) {
 	var v struct {
-		Ages []int `key:"ages"`
+		Ages  []int `key:"ages"`
+		Slice []int `key:"slice"`
 	}
 	m := map[string]interface{}{
-		"ages": []int{1, 2},
+		"ages":  []int{1, 2},
+		"slice": []interface{}{},
 	}
 
 	ast := assert.New(t)
 	ast.Nil(UnmarshalKey(m, &v))
 	ast.ElementsMatch([]int{1, 2}, v.Ages)
+	ast.Equal([]int{}, v.Slice)
 }
 
 func TestUnmarshalString(t *testing.T) {
