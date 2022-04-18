@@ -6,6 +6,8 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	ztrace "github.com/MockyBang/go-zero/core/trace"
+
 	"github.com/justinas/alice"
 	"github.com/stretchr/testify/assert"
 	"go.opentelemetry.io/otel"

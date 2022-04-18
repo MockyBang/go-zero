@@ -3,7 +3,7 @@ package httpc
 import (
 	"net/http"
 
-	"github.com/zeromicro/go-zero/core/breaker"
+	"github.com/MockyBang/go-zero/core/breaker"
 )
 
 type (

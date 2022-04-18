@@ -3,9 +3,9 @@ package generate
 import (
 	"fmt"
 
+	"github.com/MockyBang/go-zero/tools/goctl/model/mongo/template"
+	"github.com/MockyBang/go-zero/tools/goctl/util/pathx"
 	"github.com/urfave/cli"
-	"github.com/zeromicro/go-zero/tools/goctl/model/mongo/template"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
 )
 
 const (

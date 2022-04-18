@@ -16,7 +16,7 @@ English | [简体中文](readme-cn.md)
 > 
 > To upgrade from versions eariler than v1.3.0, run the following commands.
 > 
-> `go install github.com/zeromicro/go-zero/tools/goctl@latest`
+> `go install github.com/MockyBang/go-zero/tools/goctl@latest`
 > 
 > `goctl migrate —verbose —version v1.3.1`
 
@@ -98,7 +98,7 @@ As below, go-zero protects the system with a couple of layers and mechanisms:
 Run the following command under your project:
 
 ```shell
-go get -u github.com/zeromicro/go-zero
+go get -u github.com/MockyBang/go-zero
 ```
 
 ## 6. Quick Start
@@ -115,10 +115,10 @@ go get -u github.com/zeromicro/go-zero
 
    ```shell
    # for Go 1.15 and earlier
-   GO111MODULE=on go get -u github.com/zeromicro/go-zero/tools/goctl@latest
+   GO111MODULE=on go get -u github.com/MockyBang/go-zero/tools/goctl@latest
    
    # for Go 1.16 and later
-   go install github.com/zeromicro/go-zero/tools/goctl@latest
+   go install github.com/MockyBang/go-zero/tools/goctl@latest
    ```
 
    make sure goctl is executable.

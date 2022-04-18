@@ -3,8 +3,8 @@ package env
 import (
 	"fmt"
 
+	"github.com/MockyBang/go-zero/tools/goctl/pkg/env"
 	"github.com/urfave/cli"
-	"github.com/zeromicro/go-zero/tools/goctl/pkg/env"
 )
 
 func Action(c *cli.Context) error {

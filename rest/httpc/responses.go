@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/zeromicro/go-zero/core/mapping"
-	"github.com/zeromicro/go-zero/rest/internal/encoding"
+	"github.com/MockyBang/go-zero/core/mapping"
+	"github.com/MockyBang/go-zero/rest/internal/encoding"
 )
 
 // Parse parses the response.

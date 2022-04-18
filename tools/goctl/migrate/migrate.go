@@ -21,9 +21,6 @@ import (
 	"github.com/MockyBang/go-zero/tools/goctl/vars"
 	"github.com/logrusorgru/aurora"
 	"github.com/urfave/cli"
-	"github.com/zeromicro/go-zero/tools/goctl/util/console"
-	"github.com/zeromicro/go-zero/tools/goctl/util/ctx"
-	"github.com/zeromicro/go-zero/tools/goctl/vars"
 )
 
 const zeromicroVersion = "v1.3.0"

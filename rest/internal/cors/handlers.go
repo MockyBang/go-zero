@@ -3,7 +3,7 @@ package cors
 import (
 	"net/http"
 
-	"github.com/zeromicro/go-zero/rest/internal/response"
+	"github.com/MockyBang/go-zero/rest/internal/response"
 )
 
 const (

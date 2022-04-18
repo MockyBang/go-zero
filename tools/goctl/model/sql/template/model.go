@@ -3,18 +3,18 @@ package template
 import (
 	"fmt"
 
-	"github.com/zeromicro/go-zero/tools/goctl/util"
+	"github.com/MockyBang/go-zero/tools/goctl/util"
 )
 
 // ModelCustom defines a template for extension
 const ModelCustom = `package {{.pkg}}
 {{if .withCache}}
 import (
-	"github.com/zeromicro/go-zero/core/stores/cache"
-	"github.com/zeromicro/go-zero/core/stores/sqlx"
+	"github.com/MockyBang/go-zero/core/stores/cache"
+	"github.com/MockyBang/go-zero/core/stores/sqlx"
 )
 {{else}}
-import "github.com/zeromicro/go-zero/core/stores/sqlx"
+import "github.com/MockyBang/go-zero/core/stores/sqlx"
 {{end}}
 var _ {{.upperStartCamelObject}}Model = (*custom{{.upperStartCamelObject}}Model)(nil)
 

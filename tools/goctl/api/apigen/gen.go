@@ -11,8 +11,6 @@ import (
 	"github.com/MockyBang/go-zero/tools/goctl/util/pathx"
 	"github.com/logrusorgru/aurora"
 	"github.com/urfave/cli"
-	"github.com/zeromicro/go-zero/tools/goctl/util"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
 )
 
 const apiTemplate = `

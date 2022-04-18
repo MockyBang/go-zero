@@ -3,7 +3,7 @@ package httpc
 import (
 	"net/http"
 
-	"github.com/zeromicro/go-zero/rest/httpc/internal"
+	"github.com/MockyBang/go-zero/rest/httpc/internal"
 )
 
 var interceptors = []internal.Interceptor{

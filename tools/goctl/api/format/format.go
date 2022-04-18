@@ -12,11 +12,11 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/MockyBang/go-zero/core/errorx"
+	"github.com/MockyBang/go-zero/tools/goctl/api/parser"
+	"github.com/MockyBang/go-zero/tools/goctl/api/util"
+	"github.com/MockyBang/go-zero/tools/goctl/util/pathx"
 	"github.com/urfave/cli"
-	"github.com/zeromicro/go-zero/core/errorx"
-	"github.com/zeromicro/go-zero/tools/goctl/api/parser"
-	"github.com/zeromicro/go-zero/tools/goctl/api/util"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
 )
 
 const (

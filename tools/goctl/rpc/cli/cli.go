@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"path/filepath"
 
+	"github.com/MockyBang/go-zero/tools/goctl/rpc/generator"
+	"github.com/MockyBang/go-zero/tools/goctl/util"
+	"github.com/MockyBang/go-zero/tools/goctl/util/pathx"
 	"github.com/urfave/cli"
-	"github.com/zeromicro/go-zero/tools/goctl/rpc/generator"
-	"github.com/zeromicro/go-zero/tools/goctl/util"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
 )
 
 // RPCNew is to generate rpc greet service, this greet service can speed

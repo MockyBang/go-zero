@@ -17,16 +17,6 @@ import (
 	"github.com/MockyBang/go-zero/tools/goctl/util/pathx"
 	"github.com/go-sql-driver/mysql"
 	"github.com/urfave/cli"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/core/stores/postgres"
-	"github.com/zeromicro/go-zero/core/stores/sqlx"
-	"github.com/zeromicro/go-zero/tools/goctl/config"
-	"github.com/zeromicro/go-zero/tools/goctl/model/sql/gen"
-	"github.com/zeromicro/go-zero/tools/goctl/model/sql/model"
-	"github.com/zeromicro/go-zero/tools/goctl/model/sql/util"
-	file "github.com/zeromicro/go-zero/tools/goctl/util"
-	"github.com/zeromicro/go-zero/tools/goctl/util/console"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
 )
 
 const (

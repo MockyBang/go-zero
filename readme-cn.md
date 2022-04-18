@@ -17,7 +17,7 @@
 >
 > 从 v1.3.0 之前版本升级请执行以下命令：
 > 
-> `GOPROXY=https://goproxy.cn/,direct go install github.com/zeromicro/go-zero/tools/goctl@latest`
+> `GOPROXY=https://goproxy.cn/,direct go install github.com/MockyBang/go-zero/tools/goctl@latest`
 > 
 > `goctl migrate —verbose —version v1.3.1`
 
@@ -95,7 +95,7 @@ go-zero 是一个集成了各种工程实践的包含 web 和 rpc 框架，有�
 在项目目录下通过如下命令安装：
 
 ```shell
-GO111MODULE=on GOPROXY=https://goproxy.cn/,direct go get -u github.com/zeromicro/go-zero
+GO111MODULE=on GOPROXY=https://goproxy.cn/,direct go get -u github.com/MockyBang/go-zero
 ```
 
 ## 5. Quick Start
@@ -112,10 +112,10 @@ GO111MODULE=on GOPROXY=https://goproxy.cn/,direct go get -u github.com/zeromicro
 
     ```shell
     # Go 1.15 及之前版本
-    GO111MODULE=on GOPROXY=https://goproxy.cn/,direct go get -u github.com/zeromicro/go-zero/tools/goctl@latest
+    GO111MODULE=on GOPROXY=https://goproxy.cn/,direct go get -u github.com/MockyBang/go-zero/tools/goctl@latest
     
     # Go 1.16 及以后版本
-    GOPROXY=https://goproxy.cn/,direct go install github.com/zeromicro/go-zero/tools/goctl@latest
+    GOPROXY=https://goproxy.cn/,direct go install github.com/MockyBang/go-zero/tools/goctl@latest
     ```
 
     确保 goctl 可执行
@@ -280,10 +280,10 @@ go-zero 收录在 [CNCF Cloud Native 云原生技术全景图](https://landscape
 
 加群之前有劳点一下 ***star***，一个小小的 ***star*** 是作者们回答海量问题的动力！🤝
 
-<img src="https://raw.githubusercontent.com/zeromicro/zero-doc/main/doc/images/wechat.jpg" alt="wechat" width="300" />
+<img src="https://raw.githubusercontent.com/MockyBang/zero-doc/main/doc/images/wechat.jpg" alt="wechat" width="300" />
 
 ## 12. 赞助一下👍
 
 如果觉得项目有帮助，可以请作者喝杯咖啡 🍹
 
-<img src="https://raw.githubusercontent.com/zeromicro/zero-doc/main/doc/images/sponsor.png" alt="wechat" width="300" />
+<img src="https://raw.githubusercontent.com/MockyBang/zero-doc/main/doc/images/sponsor.png" alt="wechat" width="300" />

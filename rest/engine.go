@@ -13,14 +13,8 @@ import (
 	"github.com/MockyBang/go-zero/rest/handler"
 	"github.com/MockyBang/go-zero/rest/httpx"
 	"github.com/MockyBang/go-zero/rest/internal"
+	"github.com/MockyBang/go-zero/rest/internal/response"
 	"github.com/justinas/alice"
-	"github.com/zeromicro/go-zero/core/codec"
-	"github.com/zeromicro/go-zero/core/load"
-	"github.com/zeromicro/go-zero/core/stat"
-	"github.com/zeromicro/go-zero/rest/handler"
-	"github.com/zeromicro/go-zero/rest/httpx"
-	"github.com/zeromicro/go-zero/rest/internal"
-	"github.com/zeromicro/go-zero/rest/internal/response"
 )
 
 // use 1000m to represent 100%
@@ -58,7 +52,8 @@ func (ng *engine) addRoutes(r featuredRoutes) {
 }
 
 func (ng *engine) appendAuthHandler(fr featuredRoutes, chain alice.Chain,
-	verifier func(alice.Chain) alice.Chain) alice.Chain {
+	verifier func(alice.Chain) alice.Chain,
+) alice.Chain {
 	if fr.jwt.enabled {
 		if len(fr.jwt.prevSecret) == 0 {
 			chain = chain.Append(handler.Authorize(fr.jwt.secret,
@@ -89,7 +84,8 @@ func (ng *engine) bindFeaturedRoutes(router httpx.Router, fr featuredRoutes, met
 }
 
 func (ng *engine) bindRoute(fr featuredRoutes, router httpx.Router, metrics *stat.Metrics,
-	route Route, verifier func(chain alice.Chain) alice.Chain) error {
+	route Route, verifier func(chain alice.Chain) alice.Chain,
+) error {
 	chain := alice.New(
 		handler.TracingHandler(ng.conf.Name, route.Path),
 		ng.getLogHandler(),

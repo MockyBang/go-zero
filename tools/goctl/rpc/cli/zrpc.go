@@ -6,10 +6,10 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/MockyBang/go-zero/tools/goctl/rpc/generator"
+	"github.com/MockyBang/go-zero/tools/goctl/util"
+	"github.com/MockyBang/go-zero/tools/goctl/util/pathx"
 	"github.com/urfave/cli"
-	"github.com/zeromicro/go-zero/tools/goctl/rpc/generator"
-	"github.com/zeromicro/go-zero/tools/goctl/util"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
 )
 
 var (
